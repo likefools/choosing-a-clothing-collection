@@ -1,0 +1,33 @@
+
+.home{
+  h2{
+    text-align: center;
+  }
+  .typesName{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .itemsCard{
+    margin: 1rem 0;
+    // padding: 0rem;
+    .properties{
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      h5{
+        display: flex;
+        align-items: flex-end;
+        gap: 0.5rem;
+        padding: 0.2rem 0;
+      }
+      .color{
+        width: 1.5rem;
+        height: 1.5rem;
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+      }
+    }
+    
+  }
+}
