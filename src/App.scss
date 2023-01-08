@@ -1,5 +1,21 @@
 
 .home{
+  position: relative;
+  .itemsSelectedInfo{
+    z-index: 10;
+    position: fixed;
+    display: inline-block;
+    top: 65px;
+    right: 40px;
+    .item{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+
+
   h2{
     text-align: center;
   }

@@ -1,5 +1,8 @@
 import React from "react";
 import { useRef, useState, useEffect } from "react";
+
+import ItemsSelectedInfo from '../ItemsSelectedInfo'
+
 import { Button } from "react-bootstrap";
 
 import ListGroup from "react-bootstrap/ListGroup";
@@ -23,10 +26,11 @@ const Home = (props) => {
   const { items } = props;
   const [filterType, setFilterType] = useState("");
   const [filterItems, setFilterItems] = useState([]);
+  const [itemsSelected, setItemsSelected] = useState([]);
 
   useEffect(() => {
     createItemsGroup(items, filterType);
-  }, [filterType]);
+  }, [filterType,itemsSelected]);
 
   function applyFilterType(typeName) {
     setFilterType(typeName);
@@ -34,11 +38,25 @@ const Home = (props) => {
 
   function createItemsGroup(items, filterType) {
     let itemsOfType = [...items];
+    if(itemsSelected.length > 0){
+      for(const itemSelected of itemsSelected){
+        itemsOfType = itemsOfType.filter((item) => item.id !== itemSelected.id);
+
+      }
+      
+      console.log(itemsOfType)
+    }
     if (filterType) {
       itemsOfType = itemsOfType.filter((item) => item.type === filterType);
       setFilterItems(itemsOfType);
     }
   }
+
+  function getItemSelected(itemId){
+    setItemsSelected(old => [...old, itemId])
+    // console.log(itemSelected)
+  }
+  
 
   const typesName = createTypeGroup(items).types.map((typeName, index) => {
     return (
@@ -50,7 +68,7 @@ const Home = (props) => {
       >
         {typeName}{" "}
         <Badge bg="secondary">
-          {filterItems.length > 0 ? filterItems.length : 0}
+          {filterItems.length > 0 && filterType == typeName ? filterItems.length : ''}
         </Badge>
       </Button>
     );
@@ -80,16 +98,22 @@ const Home = (props) => {
             </h5>
           </div>
 
-          <Button onClick={() => console.log(item.id)}>Add to selection</Button>
+          <Button onClick={() => getItemSelected(item)}>Add to selection</Button>
         </Card.Body>
       </Card>
     </Col>
   ));
 
+  function deleteItem(value){
+    setItemsSelected(oldValues => {return oldValues.filter(item => item.id !== value.id)})
+  }
+
   if (!items) return <h2>Loading...</h2>;
 
   return (
     <div className="home">
+      <ItemsSelectedInfo itemsSelected={itemsSelected} deleteItem={deleteItem}/>
+      
       <h2>home</h2>
       <div className="typesName">{typesName}</div>
       <div className="itemsCard">
