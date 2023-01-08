@@ -6,12 +6,16 @@
     position: fixed;
     display: inline-block;
     top: 65px;
-    right: 40px;
+    right: 10px;
     .item{
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 0.5rem;
+    }
+
+    .alertSaveCollections{
+      
     }
   }
 

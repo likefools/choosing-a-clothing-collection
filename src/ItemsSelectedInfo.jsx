@@ -4,16 +4,16 @@ import Overlay from "react-bootstrap/Overlay";
 import Popover from "react-bootstrap/Popover";
 
 const ItemsSelectedInfo = (props) => {
-    const { itemsSelected , deleteItem} = props;
+  const { itemsSelected, deleteItem, saveCollections } = props;
 
-    const [show, setShow] = useState(false);
-    const [target, setTarget] = useState(null);
-    const ref = useRef(null);
+  const [show, setShow] = useState(false);
+  const [target, setTarget] = useState(null);
+  const ref = useRef(null);
 
-    const handleClick = (event) => {
-        setShow(!show);
-        setTarget(event.target);
-    };
+  const handleClick = (event) => {
+    setShow(!show);
+    setTarget(event.target);
+  };
 
   // onClick={() => getItemSelected(oldValues => {return oldValues.filter(item => item !== value)})}
 
@@ -29,11 +29,22 @@ const ItemsSelectedInfo = (props) => {
           target={target}
           placement="bottom"
           container={ref}
-          containerPadding={20}
+          containerPadding={10}
         >
           <Popover id="popover-contained">
             <Popover.Header as="h3">
-              {itemsSelected.length ? "items" : "no items"}
+              <div className="item">
+                {itemsSelected.length ? "Collections" : "no items"}
+
+                <Button
+                  size="sm"
+                  variant="success"
+                  disabled={itemsSelected.length !== 3 ? true : false}
+                  onClick={() => saveCollections()}
+                >
+                  Save
+                </Button>
+              </div>
             </Popover.Header>
             {itemsSelected.map((item, index) => (
               <Popover.Body key={index}>
