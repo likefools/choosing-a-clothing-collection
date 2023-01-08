@@ -48,7 +48,10 @@ const Home = (props) => {
         disabled={filterType == typeName ? true : false}
         onClick={() => applyFilterType(typeName)}
       >
-        {typeName}
+        {typeName}{" "}
+        <Badge bg="secondary">
+          {filterItems.length > 0 ? filterItems.length : 0}
+        </Badge>
       </Button>
     );
   });
