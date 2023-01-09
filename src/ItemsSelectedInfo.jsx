@@ -16,12 +16,12 @@ const ItemsSelectedInfo = (props) => {
   };
 
   // onClick={() => getItemSelected(oldValues => {return oldValues.filter(item => item !== value)})}
-
+  Object.keys(itemsSelected).map(item => {console.log()})
   return (
     <div className="itemsSelectedInfo">
       <div ref={ref}>
         <Button onClick={handleClick}>
-          items Selected {itemsSelected.length}
+          items Selected {Object.keys(itemsSelected).length}
         </Button>
 
         <Overlay
@@ -34,22 +34,25 @@ const ItemsSelectedInfo = (props) => {
           <Popover id="popover-contained">
             <Popover.Header as="h3">
               <div className="item">
-                {itemsSelected.length ? "Collections" : "no items"}
+                {Object.keys(itemsSelected) ? "Collections" : "no items"}
 
                 <Button
                   size="sm"
                   variant="success"
-                  disabled={itemsSelected.length !== 3 ? true : false}
+                  disabled={Object.keys(itemsSelected).length !== 3 ? true : false}
                   onClick={() => saveCollections()}
                 >
                   Save
                 </Button>
               </div>
             </Popover.Header>
-            {itemsSelected.map((item, index) => (
+            
+            {Object.keys(itemsSelected).map((item, index) => (
+              
               <Popover.Body key={index}>
                 <div className="item">
-                  {item.type}
+                  
+                  {itemsSelected[item].type} {itemsSelected[item].brand}
                   <Button
                     size="sm"
                     variant="danger"

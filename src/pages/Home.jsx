@@ -12,6 +12,8 @@ import Card from "react-bootstrap/Card";
 
 import Badge from "react-bootstrap/Badge";
 
+
+
 function createTypeGroup(items) {
   const types = [];
   for (const item of items) {
@@ -26,7 +28,7 @@ const Home = (props) => {
   const { items } = props;
   const [filterType, setFilterType] = useState("");
   const [filterItems, setFilterItems] = useState([]);
-  const [itemsSelected, setItemsSelected] = useState([]);
+  const [itemsSelected, setItemsSelected] = useState({});
   const [showAlert, setshowAlert] = useState(false);
 
   useEffect(() => {
@@ -39,20 +41,16 @@ const Home = (props) => {
 
   function createItemsGroup(items, filterType) {
     let itemsOfType = [...items];
-    if (itemsSelected.length > 0) {
-      for (const itemSelected of itemsSelected) {
-        if (filterType === itemSelected.type) {
-          itemsOfType = itemsOfType.filter(
-            (item) => item.id != itemSelected.id
-          );
-          return setFilterItems([]);
-        } else {
-          itemsOfType = itemsOfType.filter(
-            (item) => item.id != itemSelected.id
-          );
-        }
-      }
-    }
+    // if (itemsSelected.length > 0) {
+    //   for (const itemSelected of itemsSelected) {
+    //     if (filterType === itemSelected.type) {
+    //       itemsOfType = itemsOfType.filter(
+    //         (item) => item.id != itemSelected.id
+    //       );
+    //       // return setFilterItems([]);
+    //     }
+    //   }
+    // }
     if (itemsSelected.length === 3) {
     }
 
@@ -62,8 +60,8 @@ const Home = (props) => {
     }
   }
 
-  function getItemSelected(itemId) {
-    setItemsSelected((old) => [...old, itemId]);
+  function getItemSelected(item) {
+    setItemsSelected({...itemsSelected, [item.type]: item});
     // console.log(itemSelected)
   }
 
@@ -109,7 +107,7 @@ const Home = (props) => {
             </h5>
           </div>
 
-          <Button onClick={() => getItemSelected(item)}>
+          <Button disabled={!itemsSelected} onClick={() => getItemSelected(item)}>
             Add to selection
           </Button>
         </Card.Body>
@@ -117,10 +115,11 @@ const Home = (props) => {
     </Col>
   ));
 
-  function deleteItem(value) {
-    setItemsSelected((oldValues) => {
-      return oldValues.filter((item) => item.id !== value.id);
-    });
+  function deleteItem(nameType) {
+    let itemsObj = { ...itemsSelected };
+    delete itemsObj[nameType];
+    setItemsSelected(itemsObj);
+    
   }
 
   // if (itemsSelected.length === 3) {

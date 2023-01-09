@@ -36,12 +36,14 @@ function App() {
         <NavbarTop />
         <Container>
           <Routes>
-            <Route index element={<Home items={items ? items : ""} />} />
+            <Route index element={<Home items={items ? items : ""}  />} />
             <Route path="/collection" element={<Collection />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
+          {/* <div className="test">test</div> */}
         </Container>
       </BrowserRouter>
+      
     </div>
   );
 }

@@ -3,22 +3,23 @@
   position: relative;
   .itemsSelectedInfo{
     z-index: 10;
-    position: fixed;
     display: inline-block;
-    top: 65px;
-    right: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
     .item{
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 0.5rem;
     }
-
-    .alertSaveCollections{
-      
-    }
   }
-
+  .alertSaveCollections{
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
 
   h2{
     text-align: center;

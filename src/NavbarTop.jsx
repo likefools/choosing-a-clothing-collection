@@ -2,8 +2,9 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import Button from 'react-bootstrap/Button';
 import {LinkContainer} from 'react-router-bootstrap';
-
+import ItemsSelectedInfo from './ItemsSelectedInfo';
 
 const NavbarTop = () => {
 
@@ -37,6 +38,9 @@ const expand = 'sm'
                   <LinkContainer to="/Collection">
                     <Nav.Link>Collection</Nav.Link>
                   </LinkContainer>
+                </Nav>
+                <Nav className="justify-content-end flex-grow-1 pe-3">
+                  
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
