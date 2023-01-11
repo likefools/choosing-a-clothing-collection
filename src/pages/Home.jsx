@@ -127,11 +127,18 @@ const Home = (props) => {
   //   setItemsSelected([]);
   // }
   function saveCollections() {
+    moovCollectio(itemsSelected)
+    
+    setItemsSelected({});
     setshowAlert(true);
   }
 
   function isShowAlert() {
     setshowAlert(false);
+  }
+
+  function moovCollectio(collectionObj){
+    // moovCollectio
   }
 
   if (!items) return <h2>Loading...</h2>;

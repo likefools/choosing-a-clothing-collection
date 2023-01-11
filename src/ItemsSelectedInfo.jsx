@@ -16,7 +16,7 @@ const ItemsSelectedInfo = (props) => {
   };
 
   // onClick={() => getItemSelected(oldValues => {return oldValues.filter(item => item !== value)})}
-  Object.keys(itemsSelected).map(item => {console.log()})
+  
   return (
     <div className="itemsSelectedInfo">
       <div ref={ref}>
