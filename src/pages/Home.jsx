@@ -12,8 +12,6 @@ import Card from "react-bootstrap/Card";
 
 import Badge from "react-bootstrap/Badge";
 
-
-
 function createTypeGroup(items) {
   const types = [];
   for (const item of items) {
@@ -25,7 +23,7 @@ function createTypeGroup(items) {
 }
 
 const Home = (props) => {
-  const { items } = props;
+  const { items, moovCollections } = props;
   const [filterType, setFilterType] = useState("");
   const [filterItems, setFilterItems] = useState([]);
   const [itemsSelected, setItemsSelected] = useState({});
@@ -41,16 +39,6 @@ const Home = (props) => {
 
   function createItemsGroup(items, filterType) {
     let itemsOfType = [...items];
-    // if (itemsSelected.length > 0) {
-    //   for (const itemSelected of itemsSelected) {
-    //     if (filterType === itemSelected.type) {
-    //       itemsOfType = itemsOfType.filter(
-    //         (item) => item.id != itemSelected.id
-    //       );
-    //       // return setFilterItems([]);
-    //     }
-    //   }
-    // }
     if (itemsSelected.length === 3) {
     }
 
@@ -61,7 +49,7 @@ const Home = (props) => {
   }
 
   function getItemSelected(item) {
-    setItemsSelected({...itemsSelected, [item.type]: item});
+    setItemsSelected({ ...itemsSelected, [item.type]: item });
     // console.log(itemSelected)
   }
 
@@ -107,7 +95,10 @@ const Home = (props) => {
             </h5>
           </div>
 
-          <Button disabled={!itemsSelected} onClick={() => getItemSelected(item)}>
+          <Button
+            disabled={!itemsSelected}
+            onClick={() => getItemSelected(item)}
+          >
             Add to selection
           </Button>
         </Card.Body>
@@ -119,7 +110,6 @@ const Home = (props) => {
     let itemsObj = { ...itemsSelected };
     delete itemsObj[nameType];
     setItemsSelected(itemsObj);
-    
   }
 
   // if (itemsSelected.length === 3) {
@@ -127,18 +117,15 @@ const Home = (props) => {
   //   setItemsSelected([]);
   // }
   function saveCollections() {
-    moovCollectio(itemsSelected)
-    
+    moovCollections(itemsSelected);
+    setFilterType("");
     setItemsSelected({});
+    setFilterItems([]);
     setshowAlert(true);
   }
 
   function isShowAlert() {
     setshowAlert(false);
-  }
-
-  function moovCollectio(collectionObj){
-    // moovCollectio
   }
 
   if (!items) return <h2>Loading...</h2>;

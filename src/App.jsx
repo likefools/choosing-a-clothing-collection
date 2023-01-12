@@ -25,10 +25,41 @@ async function getData() {
 
 function App() {
   const [items, setItems] = useState();
+  const [collection, setCollection] = useState([]);
 
   useEffect(() => {
     getData().then((data) => setItems(data));
   }, []);
+
+  useEffect(() => {
+    if (items) {
+      filterOutSelectedItems();
+    }
+  }, [collection]);
+
+  function moovCollections(collectionObj) {
+    // Object.keys(collectionObj).forEach(item => collectionObj[item])
+    setCollection((old) => [...old, collectionObj]);
+  }
+
+  function filterOutSelectedItems() {
+    let itemsOfType = [...items];
+    // items, collection
+    if (collection.length > 0) {
+      collection.forEach((typeItems) => {
+        Object.keys(typeItems).forEach((typeItem) => {
+          // typeItem[typeItem].id
+          itemsOfType = itemsOfType.filter(
+            (item) => item.id !== typeItems[typeItem].id
+          );
+        });
+      });
+      console.log(collection[0]["pants"].id);
+    }
+    setItems(itemsOfType);
+  }
+
+  // console.log(collection);
 
   return (
     <div className="App">
@@ -36,14 +67,21 @@ function App() {
         <NavbarTop />
         <Container>
           <Routes>
-            <Route index element={<Home items={items ? items : ""}  />} />
+            <Route
+              index
+              element={
+                <Home
+                  items={items ? items : ""}
+                  moovCollections={moovCollections}
+                />
+              }
+            />
             <Route path="/collection" element={<Collection />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
           {/* <div className="test">test</div> */}
         </Container>
       </BrowserRouter>
-      
     </div>
   );
 }
