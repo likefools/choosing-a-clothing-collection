@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // react-bootstrap
 import Container from "react-bootstrap/Container";
+import { Button } from "react-bootstrap";
 
 // pages
 import Home from "./pages/Home";
@@ -54,12 +55,18 @@ function App() {
           );
         });
       });
-      console.log(collection[0]["pants"].id);
+      
     }
     setItems(itemsOfType);
   }
 
-  // console.log(collection);
+  function deleteCollection(collection, n){
+    const updatedArray = collection.filter((item, index) => index !== n);
+    console.log(updatedArray, n);
+    return
+    
+  }
+  
 
   return (
     <div className="App">
@@ -76,11 +83,16 @@ function App() {
                 />
               }
             />
-            <Route path="/collection" element={<Collection />} />
+            <Route path="/collection" element={<Collection collection={collection} />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
           {/* <div className="test">test</div> */}
         </Container>
+        <Button
+            onClick={() => setCollection(deleteCollection(collection, 0))}
+          >
+            Add to selection
+          </Button>
       </BrowserRouter>
     </div>
   );
