@@ -1,77 +1,66 @@
-import React from "react";
-import { useRef, useState, useEffect } from "react";
-
+import React, { useState, useEffect } from "react";
+import { Button, Badge, ListGroup, Row, Col, Card } from "react-bootstrap";
 import ItemsSelectedInfo from "../ItemsSelectedInfo";
 import AlertSaveCollections from "../AlertSaveCollections";
-import { Button } from "react-bootstrap";
 
-import ListGroup from "react-bootstrap/ListGroup";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
-
-import Badge from "react-bootstrap/Badge";
-
-function createTypeGroup(items) {
-  const types = [];
-  for (const item of items) {
-    if (!types.includes(item.type)) {
-      types.push(item.type);
-    }
-  }
-  return { types };
-}
-
-const Home = (props) => {
-  const { items, moovCollections } = props;
+const Home = ({ items, moovCollections }) => {
   const [filterType, setFilterType] = useState("");
   const [filterItems, setFilterItems] = useState([]);
   const [itemsSelected, setItemsSelected] = useState({});
   const [showAlert, setshowAlert] = useState(false);
+  const [selectedTypes, setSelectedTypes] = useState([]);
 
   useEffect(() => {
-    createItemsGroup(items, filterType);
+    filterItemsByType(items, filterType);
   }, [filterType, itemsSelected]);
 
-  function applyFilterType(typeName) {
+  function createTypesList(items) {
+    const types = [];
+    for (const item of items) {
+      if (!types.includes(item.type)) {
+        types.push(item.type);
+      }
+    }
+    return types;
+  }
+
+  function setActiveType(typeName) {
     setFilterType(typeName);
   }
 
-  function createItemsGroup(items, filterType) {
+  function filterItemsByType(items, filterType) {
     let itemsOfType = [...items];
-    if (itemsSelected.length === 3) {
-    }
-
     if (filterType) {
       itemsOfType = itemsOfType.filter((item) => item.type === filterType);
       setFilterItems(itemsOfType);
     }
   }
 
-  function getItemSelected(item) {
+  function addToSelectedItems(item) {
     setItemsSelected({ ...itemsSelected, [item.type]: item });
     // console.log(itemSelected)
   }
 
-  const typesName = createTypeGroup(items).types.map((typeName, index) => {
+  const typesButtons = createTypesList(items).map((type, index) => {
     return (
       <Button
+        disabled={filterType == type ? true : false}
         key={index}
-        className="btn"
-        disabled={filterType == typeName ? true : false}
-        onClick={() => applyFilterType(typeName)}
+        onClick={() => {
+          setFilterType(type);
+          setSelectedTypes([...selectedTypes, type]);
+        }}
       >
-        {typeName}{" "}
-        <Badge bg="secondary">
-          {filterItems.length > 0 && filterType == typeName
-            ? filterItems.length
-            : ""}
+        {type}{" "}
+        <Badge>
+          {items.filter((i) => i.type === type).length -
+            Object.values(itemsSelected).filter((i) => i.type === type).length}
         </Badge>
       </Button>
     );
   });
 
-  const itemsCard = filterItems.map((item, index) => (
+  const filteredItemsCards = filterItems.map((item, index) => (
     <Col key={index}>
       <Card>
         <Card.Header className="text-center">
@@ -96,8 +85,14 @@ const Home = (props) => {
           </div>
 
           <Button
-            disabled={!itemsSelected}
-            onClick={() => getItemSelected(item)}
+            disabled={
+              itemsSelected[item.type]
+                ? itemsSelected[item.type].id === item.id
+                : false
+            }
+            onClick={() => {
+              addToSelectedItems(item);
+            }}
           >
             Add to selection
           </Button>
@@ -106,7 +101,7 @@ const Home = (props) => {
     </Col>
   ));
 
-  function deleteItem(nameType) {
+  function removeFromSelectedItems(nameType) {
     let itemsObj = { ...itemsSelected };
     delete itemsObj[nameType];
     setItemsSelected(itemsObj);
@@ -116,7 +111,7 @@ const Home = (props) => {
   //   setshowAlert(true);
   //   setItemsSelected([]);
   // }
-  function saveCollections() {
+  function saveSelectedItems() {
     moovCollections(itemsSelected);
     setFilterType("");
     setItemsSelected({});
@@ -134,16 +129,16 @@ const Home = (props) => {
     <div className="home">
       <ItemsSelectedInfo
         itemsSelected={itemsSelected}
-        deleteItem={deleteItem}
-        saveCollections={saveCollections}
+        deleteItem={removeFromSelectedItems}
+        saveCollections={saveSelectedItems}
       />
       <AlertSaveCollections showAlert={showAlert} isShowAlert={isShowAlert} />
 
       <h2>home</h2>
-      <div className="typesName">{typesName}</div>
+      <div className="typesName">{typesButtons}</div>
       <div className="itemsCard">
         <Row xs={2} md={3} lg={4} className="g-2">
-          {itemsCard}
+          {filteredItemsCards}
         </Row>
       </div>
     </div>

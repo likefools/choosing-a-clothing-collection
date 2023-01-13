@@ -25,7 +25,7 @@ async function getData() {
 }
 
 function App() {
-  const [items, setItems] = useState();
+  const [items, setItems] = useState([]);
   const [collection, setCollection] = useState([]);
 
   useEffect(() => {
@@ -34,8 +34,14 @@ function App() {
 
   useEffect(() => {
     if (items) {
-      filterOutSelectedItems();
+      setItems(
+        [
+          ...items,
+          ...collection.map((typeItems) => Object.values(typeItems)),
+        ].flat()
+      );
     }
+    console.log(items);
   }, [collection]);
 
   function moovCollections(collectionObj) {
@@ -55,18 +61,14 @@ function App() {
           );
         });
       });
-      
+      setItems(itemsOfType);
     }
-    setItems(itemsOfType);
   }
 
-  function deleteCollection(collection, n){
+  const deleteCollection = (n) => {
     const updatedArray = collection.filter((item, index) => index !== n);
-    console.log(updatedArray, n);
-    return
-    
-  }
-  
+    setCollection(updatedArray);
+  };
 
   return (
     <div className="App">
@@ -83,16 +85,15 @@ function App() {
                 />
               }
             />
-            <Route path="/collection" element={<Collection collection={collection} />} />
+            <Route
+              path="/collection"
+              element={<Collection collection={collection} />}
+            />
             <Route path="*" element={<NoPage />} />
           </Routes>
           {/* <div className="test">test</div> */}
         </Container>
-        <Button
-            onClick={() => setCollection(deleteCollection(collection, 0))}
-          >
-            Add to selection
-          </Button>
+        <Button onClick={() => deleteCollection(0)}>Delete</Button>
       </BrowserRouter>
     </div>
   );
