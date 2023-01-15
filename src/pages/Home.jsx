@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from "react";
+
+import { useContext } from 'react';
+import { useMessage } from '../Context';
+import { useCollection } from '../Context';
+
 import { Button, Badge, ListGroup, Row, Col, Card } from "react-bootstrap";
 import ItemsSelectedInfo from "../ItemsSelectedInfo";
 import AlertSaveCollections from "../AlertSaveCollections";
@@ -9,6 +14,8 @@ const Home = ({ items, moovCollections, deleteItem, moovToSelectedItems }) => {
   const [itemsSelected, setItemsSelected] = useState({});
   const [showAlert, setshowAlert] = useState(false);
   const [selectedTypes, setSelectedTypes] = useState([]);
+
+  const context = useCollection();
 
   useEffect(() => {
     filterItemsByType(items, filterType);
@@ -142,6 +149,8 @@ const Home = ({ items, moovCollections, deleteItem, moovToSelectedItems }) => {
           {filteredItemsCards}
         </Row>
       </div>
+      <p>{context.collection}</p>
+      
     </div>
   );
 };

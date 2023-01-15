@@ -1,7 +1,9 @@
 import React from "react";
-import { useRef, useState, useEffect, createContext } from "react";
+import { useRef, useState, useEffect } from "react";
 
-const UserContext = createContext();
+import { Provider } from './Context';
+import { useMessage } from './Context';
+import { useCollection } from './Context';
 
 // react-router
 import NavbarTop from "./NavbarTop";
@@ -32,8 +34,11 @@ function App() {
   const [items, setItems] = useState([]);
   const [itemsSelected, setItemsSelected] = useState({});
   const [collection, setCollection] = useState([]);
-  const [username, setUsername] = useState("John Doe");
 
+  const messageContext = useMessage();
+  const collectionContext = useCollection();
+
+  const contextValue = {...messageContext, ...collectionContext};
   useEffect(() => {
     getData().then((data) => setItems(data));
   }, []);
@@ -97,11 +102,9 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+      <Provider value={contextValue}>
         <NavbarTop itemsSelected={itemsSelected} />
         <ItemsSelectedInfo itemsSelected={itemsSelected} />
-        <UserContext.Provider value={{ username, setUsername }}>
-          <ChildComponent />
-        </UserContext.Provider>
         <Container>
           <Routes>
             <Route
@@ -125,19 +128,11 @@ function App() {
         </Container>
 
         <Button onClick={() => deleteCollection(0)}>Delete</Button>
+        </Provider>
       </BrowserRouter>
     </div>
   );
 }
 
-function ChildComponent() {
-  const { username, setUsername } = React.useContext(UserContext);
-  return (
-    <div>
-      <p>Welcome, {username}</p>
-      <button onClick={() => setUsername("Jane Doe")}>Change User</button>
-    </div>
-  );
-}
 
 export default App;
