@@ -3,7 +3,7 @@ import { Button, Badge, ListGroup, Row, Col, Card } from "react-bootstrap";
 import ItemsSelectedInfo from "../ItemsSelectedInfo";
 import AlertSaveCollections from "../AlertSaveCollections";
 
-const Home = ({ items, moovCollections }) => {
+const Home = ({ items, moovCollections, deleteItem, moovToSelectedItems }) => {
   const [filterType, setFilterType] = useState("");
   const [filterItems, setFilterItems] = useState([]);
   const [itemsSelected, setItemsSelected] = useState({});
@@ -37,6 +37,7 @@ const Home = ({ items, moovCollections }) => {
   }
 
   function addToSelectedItems(item) {
+    moovToSelectedItems(item);
     setItemsSelected({ ...itemsSelected, [item.type]: item });
     // console.log(itemSelected)
   }
@@ -52,7 +53,7 @@ const Home = ({ items, moovCollections }) => {
         }}
       >
         {type}{" "}
-        <Badge>
+        <Badge bg="secondary">
           {items.filter((i) => i.type === type).length -
             Object.values(itemsSelected).filter((i) => i.type === type).length}
         </Badge>
@@ -129,7 +130,7 @@ const Home = ({ items, moovCollections }) => {
     <div className="home">
       <ItemsSelectedInfo
         itemsSelected={itemsSelected}
-        deleteItem={removeFromSelectedItems}
+        deleteItem={deleteItem}
         saveCollections={saveSelectedItems}
       />
       <AlertSaveCollections showAlert={showAlert} isShowAlert={isShowAlert} />

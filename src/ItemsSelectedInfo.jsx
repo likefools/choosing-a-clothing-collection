@@ -16,7 +16,7 @@ const ItemsSelectedInfo = (props) => {
   };
 
   // onClick={() => getItemSelected(oldValues => {return oldValues.filter(item => item !== value)})}
-  
+
   return (
     <div className="itemsSelectedInfo">
       <div ref={ref}>
@@ -39,19 +39,19 @@ const ItemsSelectedInfo = (props) => {
                 <Button
                   size="sm"
                   variant="success"
-                  disabled={Object.keys(itemsSelected).length !== 3 ? true : false}
+                  disabled={
+                    Object.keys(itemsSelected).length !== 3 ? true : false
+                  }
                   onClick={() => saveCollections()}
                 >
                   Save
                 </Button>
               </div>
             </Popover.Header>
-            
+
             {Object.keys(itemsSelected).map((item, index) => (
-              
               <Popover.Body key={index}>
                 <div className="item">
-                  
                   {itemsSelected[item].type} {itemsSelected[item].brand}
                   <Button
                     size="sm"

@@ -1,5 +1,7 @@
 import React from "react";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, createContext } from "react";
+
+const UserContext = createContext();
 
 // react-router
 import NavbarTop from "./NavbarTop";
@@ -14,6 +16,8 @@ import Home from "./pages/Home";
 import Collection from "./pages/Collection";
 import NoPage from "./pages/NoPage";
 
+import ItemsSelectedInfo from "./ItemsSelectedInfo";
+
 import "./App.scss";
 
 async function getData() {
@@ -26,7 +30,9 @@ async function getData() {
 
 function App() {
   const [items, setItems] = useState([]);
+  const [itemsSelected, setItemsSelected] = useState({});
   const [collection, setCollection] = useState([]);
+  const [username, setUsername] = useState("John Doe");
 
   useEffect(() => {
     getData().then((data) => setItems(data));
@@ -34,15 +40,27 @@ function App() {
 
   useEffect(() => {
     if (items) {
-      setItems(
-        [
-          ...items,
-          ...collection.map((typeItems) => Object.values(typeItems)),
-        ].flat()
-      );
+      filterOutSelectedItems();
     }
-    console.log(items);
   }, [collection]);
+
+  function moovToSelectedItems(item) {
+    setItemsSelected({ ...itemsSelected, [item.type]: item });
+  }
+
+  function removeFromSelectedItems(nameType) {
+    let itemsObj = { ...itemsSelected };
+    delete itemsObj[nameType];
+    setItemsSelected(itemsObj);
+  }
+
+  // function saveSelectedItems() {
+  //   moovCollections(itemsSelected);
+  //   setFilterType("");
+  //   setItemsSelected({});
+  //   setFilterItems([]);
+  //   setshowAlert(true);
+  // }
 
   function moovCollections(collectionObj) {
     // Object.keys(collectionObj).forEach(item => collectionObj[item])
@@ -68,12 +86,22 @@ function App() {
   const deleteCollection = (n) => {
     const updatedArray = collection.filter((item, index) => index !== n);
     setCollection(updatedArray);
+    setItems(
+      [
+        ...items,
+        ...collection.map((typeItems) => Object.values(typeItems)),
+      ].flat()
+    );
   };
 
   return (
     <div className="App">
       <BrowserRouter>
-        <NavbarTop />
+        <NavbarTop itemsSelected={itemsSelected} />
+        <ItemsSelectedInfo itemsSelected={itemsSelected} />
+        <UserContext.Provider value={{ username, setUsername }}>
+          <ChildComponent />
+        </UserContext.Provider>
         <Container>
           <Routes>
             <Route
@@ -82,6 +110,8 @@ function App() {
                 <Home
                   items={items ? items : ""}
                   moovCollections={moovCollections}
+                  deleteItem={removeFromSelectedItems}
+                  moovToSelectedItems={moovToSelectedItems}
                 />
               }
             />
@@ -93,8 +123,19 @@ function App() {
           </Routes>
           {/* <div className="test">test</div> */}
         </Container>
+
         <Button onClick={() => deleteCollection(0)}>Delete</Button>
       </BrowserRouter>
+    </div>
+  );
+}
+
+function ChildComponent() {
+  const { username, setUsername } = React.useContext(UserContext);
+  return (
+    <div>
+      <p>Welcome, {username}</p>
+      <button onClick={() => setUsername("Jane Doe")}>Change User</button>
     </div>
   );
 }
