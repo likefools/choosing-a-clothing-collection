@@ -1,10 +1,17 @@
-import React, { useState, useRef } from "react";
+import React, { useContext, useState, useRef } from "react";
+
+import { DataContext } from './Context';
+
 import Button from "react-bootstrap/Button";
 import Overlay from "react-bootstrap/Overlay";
 import Popover from "react-bootstrap/Popover";
 
 const ItemsSelectedInfo = (props) => {
-  const { itemsSelected, deleteItem, saveCollections } = props;
+
+  const allContextProps = useContext(DataContext);
+  const {itemsSelected, removeItemSelected, saveCollections} = {...allContextProps};
+
+  // const {  } = props;
 
   const [show, setShow] = useState(false);
   const [target, setTarget] = useState(null);
@@ -14,6 +21,11 @@ const ItemsSelectedInfo = (props) => {
     setShow(!show);
     setTarget(event.target);
   };
+
+  const deleteItem = (item) => {
+    removeItemSelected(item)
+  }
+
 
   // onClick={() => getItemSelected(oldValues => {return oldValues.filter(item => item !== value)})}
 
@@ -42,7 +54,7 @@ const ItemsSelectedInfo = (props) => {
                   disabled={
                     Object.keys(itemsSelected).length !== 3 ? true : false
                   }
-                  onClick={() => saveCollections()}
+                  onClick={() => saveCollections(itemsSelected)}
                 >
                   Save
                 </Button>

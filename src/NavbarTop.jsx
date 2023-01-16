@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import { LinkContainer } from "react-router-bootstrap";
 import ItemsSelectedInfo from "./ItemsSelectedInfo";
 
-const NavbarTop = ({ itemsSelected }) => {
+const NavbarTop = () => {
   const expand = "sm";
 
   return (
@@ -42,7 +42,7 @@ const NavbarTop = ({ itemsSelected }) => {
               </LinkContainer>
             </Nav>
             <Nav className="justify-content-end flex-grow-1 pe-3">
-              <ItemsSelectedInfo itemsSelected={itemsSelected} />
+              <ItemsSelectedInfo/>
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>

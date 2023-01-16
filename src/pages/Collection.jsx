@@ -1,21 +1,25 @@
 import React from "react";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useContext, useState, useEffect } from "react";
+
+import { DataContext } from '../Context';
 
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 
-const Collection = (props) => {
-  const { collection } = props;
+const Collection = () => {
+  const allContextProps = useContext(DataContext);
+  const {itemsCollection} = {...allContextProps};
+  // const collection = itemsCollection;
 
-  const [items, setItems] = useState();
+  const [collection, setCollection] = useState();
 
   useEffect(() => {
-    setItems(collection);
+    setCollection(itemsCollection);
   }, [collection]);
 
-  if (!items) return <h2>no items</h2>;
-  const setCollection = items?.map((item) =>
+  if (!collection) return <h2>no items</h2>;
+  const getCollection = collection?.map((item) =>
     // items collection id 1 / 2
 
     Object.keys(item).map((typeItem, index) => {
@@ -55,7 +59,7 @@ const Collection = (props) => {
       <h2>collection</h2>
       <div className="itemsCard">
         <Row xs={3} md={3} lg={4} className="g-2">
-          {setCollection}
+          {getCollection}
         </Row>
       </div>
     </div>
@@ -63,30 +67,3 @@ const Collection = (props) => {
 };
 
 export default Collection;
-
-// console.log(item[typeItem])
-// <Col key={index}>
-//   <Card>
-//     <Card.Header className="text-center">
-//       <h3>{item[typeItem].brand}</h3>
-//     </Card.Header>
-//     <Card.Img
-//       variant="top"
-//       src="https://store.mbit.co.il/wp-content/uploads/2020/09/tshirt-2.jpg"
-//     />
-//     <Card.Body>
-//       <div className="properties">
-//         <h5>
-//           size: <span>{item[typeItem].size}</span>
-//         </h5>
-//         <h5>
-//           color:{" "}
-//           <span
-//             className="color"
-//             style={{ backgroundColor: item[typeItem].color }}
-//           ></span>
-//         </h5>
-//       </div>
-//     </Card.Body>
-//   </Card>
-// </Col>

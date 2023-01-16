@@ -1,27 +1,30 @@
-import React, { useState, useEffect } from "react";
 
-import { useContext } from 'react';
-import { useMessage } from '../Context';
-import { useCollection } from '../Context';
+import React, { useContext, useState, useEffect } from "react";
+
+import { DataContext } from '../Context';
+
 
 import { Button, Badge, ListGroup, Row, Col, Card } from "react-bootstrap";
 import ItemsSelectedInfo from "../ItemsSelectedInfo";
 import AlertSaveCollections from "../AlertSaveCollections";
 
-const Home = ({ items, moovCollections, deleteItem, moovToSelectedItems }) => {
+const Home = ({ moovCollections, deleteItem, moovToSelectedItems }) => {
   const [filterType, setFilterType] = useState("");
   const [filterItems, setFilterItems] = useState([]);
-  const [itemsSelected, setItemsSelected] = useState({});
+  // const [itemsSelected, setItemsSelected] = useState({});
   const [showAlert, setshowAlert] = useState(false);
   const [selectedTypes, setSelectedTypes] = useState([]);
 
-  const context = useCollection();
-
+  const allContextProps = useContext(DataContext);
+  const {items, itemsSelected, setItemsSelected} = {...allContextProps};
+  
+// console.log(allContextProps)
   useEffect(() => {
     filterItemsByType(items, filterType);
   }, [filterType, itemsSelected]);
 
   function createTypesList(items) {
+    if(!items) return <h3>no items</h3>
     const types = [];
     for (const item of items) {
       if (!types.includes(item.type)) {
@@ -44,9 +47,9 @@ const Home = ({ items, moovCollections, deleteItem, moovToSelectedItems }) => {
   }
 
   function addToSelectedItems(item) {
-    moovToSelectedItems(item);
+
     setItemsSelected({ ...itemsSelected, [item.type]: item });
-    // console.log(itemSelected)
+    
   }
 
   const typesButtons = createTypesList(items).map((type, index) => {
@@ -136,7 +139,6 @@ const Home = ({ items, moovCollections, deleteItem, moovToSelectedItems }) => {
   return (
     <div className="home">
       <ItemsSelectedInfo
-        itemsSelected={itemsSelected}
         deleteItem={deleteItem}
         saveCollections={saveSelectedItems}
       />
@@ -149,7 +151,7 @@ const Home = ({ items, moovCollections, deleteItem, moovToSelectedItems }) => {
           {filteredItemsCards}
         </Row>
       </div>
-      <p>{context.collection}</p>
+      
       
     </div>
   );

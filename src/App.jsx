@@ -1,9 +1,8 @@
 import React from "react";
 import { useRef, useState, useEffect } from "react";
 
-import { Provider } from './Context';
-import { useMessage } from './Context';
-import { useCollection } from './Context';
+
+import {DataProvider} from './Context';
 
 // react-router
 import NavbarTop from "./NavbarTop";
@@ -35,29 +34,18 @@ function App() {
   const [itemsSelected, setItemsSelected] = useState({});
   const [collection, setCollection] = useState([]);
 
-  const messageContext = useMessage();
-  const collectionContext = useCollection();
-
-  const contextValue = {...messageContext, ...collectionContext};
+  
   useEffect(() => {
     getData().then((data) => setItems(data));
   }, []);
 
-  useEffect(() => {
-    if (items) {
-      filterOutSelectedItems();
-    }
-  }, [collection]);
+  // useEffect(() => {
+  //   if (items) {
+  //     filterOutSelectedItems();
+  //   }
+  // }, [collection]);
 
-  function moovToSelectedItems(item) {
-    setItemsSelected({ ...itemsSelected, [item.type]: item });
-  }
-
-  function removeFromSelectedItems(nameType) {
-    let itemsObj = { ...itemsSelected };
-    delete itemsObj[nameType];
-    setItemsSelected(itemsObj);
-  }
+  
 
   // function saveSelectedItems() {
   //   moovCollections(itemsSelected);
@@ -72,21 +60,21 @@ function App() {
     setCollection((old) => [...old, collectionObj]);
   }
 
-  function filterOutSelectedItems() {
-    let itemsOfType = [...items];
-    // items, collection
-    if (collection.length > 0) {
-      collection.forEach((typeItems) => {
-        Object.keys(typeItems).forEach((typeItem) => {
-          // typeItem[typeItem].id
-          itemsOfType = itemsOfType.filter(
-            (item) => item.id !== typeItems[typeItem].id
-          );
-        });
-      });
-      setItems(itemsOfType);
-    }
-  }
+  // function filterOutSelectedItems() {
+  //   let itemsOfType = [...items];
+  //   // items, collection
+  //   if (collection.length > 0) {
+  //     collection.forEach((typeItems) => {
+  //       Object.keys(typeItems).forEach((typeItem) => {
+  //         // typeItem[typeItem].id
+  //         itemsOfType = itemsOfType.filter(
+  //           (item) => item.id !== typeItems[typeItem].id
+  //         );
+  //       });
+  //     });
+  //     setItems(itemsOfType);
+  //   }
+  // }
 
   const deleteCollection = (n) => {
     const updatedArray = collection.filter((item, index) => index !== n);
@@ -102,33 +90,23 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <Provider value={contextValue}>
-        <NavbarTop itemsSelected={itemsSelected} />
-        <ItemsSelectedInfo itemsSelected={itemsSelected} />
+      <DataProvider>
+        <NavbarTop />
         <Container>
           <Routes>
             <Route
               index
-              element={
-                <Home
-                  items={items ? items : ""}
-                  moovCollections={moovCollections}
-                  deleteItem={removeFromSelectedItems}
-                  moovToSelectedItems={moovToSelectedItems}
-                />
-              }
+              element={<Home/>}
             />
             <Route
               path="/collection"
-              element={<Collection collection={collection} />}
+              element={<Collection/>}
             />
             <Route path="*" element={<NoPage />} />
           </Routes>
-          {/* <div className="test">test</div> */}
+          <Button onClick={() => deleteCollection(0)}>Delete</Button>
         </Container>
-
-        <Button onClick={() => deleteCollection(0)}>Delete</Button>
-        </Provider>
+        </DataProvider>
       </BrowserRouter>
     </div>
   );
