@@ -6,6 +6,8 @@ import Button from "react-bootstrap/Button";
 import Overlay from "react-bootstrap/Overlay";
 import Popover from "react-bootstrap/Popover";
 
+import { FaShoppingCart } from "react-icons/fa";
+
 const ItemsSelectedInfo = (props) => {
 
   const allContextProps = useContext(DataContext);
@@ -33,6 +35,7 @@ const ItemsSelectedInfo = (props) => {
     <div className="itemsSelectedInfo">
       <div ref={ref}>
         <Button onClick={handleClick}>
+        <FaShoppingCart size={20} className="mr-2" />{' '}
           items Selected {Object.keys(itemsSelected).length}
         </Button>
 
@@ -46,8 +49,8 @@ const ItemsSelectedInfo = (props) => {
           <Popover id="popover-contained">
             <Popover.Header as="h3">
               <div className="item">
-                {Object.keys(itemsSelected) ? "Collections" : "no items"}
-
+                {Object.keys(itemsSelected) ? "Collections " : "no items "}
+                
                 <Button
                   size="sm"
                   variant="success"
