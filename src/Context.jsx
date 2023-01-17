@@ -1,7 +1,6 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from "react";
 
 export const DataContext = createContext();
-
 
 async function getData() {
   const actualData = await fetch(
@@ -15,53 +14,45 @@ export function DataProvider({ children }) {
   const [items, setItems] = useState([]);
   const [itemsSelected, setItemsSelected] = useState({});
   const [itemsCollection, setItemsCollection] = useState([]);
-  
-  
-
+  const [filterType, setFilterType] = useState("");
+  const [filterItems, setFilterItems] = useState([]);
+  const [showAlert, setshowAlert] = useState(false);
   useEffect(() => {
     async function fetchData() {
       const data = await getData();
       setItems(data);
       // filterOutSelectedItems()
-      // set the first data as the current data
     }
     fetchData();
-  }, [items]);
-
-  const filterOutSelectedItems = () => {
-    let itemsOfType = [...items];
-    // items, collection
-    if (itemsCollection.length > 0) {
-      itemsCollection.forEach((typeItems) => {
-        Object.keys(typeItems).forEach((typeItem) => {
-          // typeItem[typeItem].id
-          itemsOfType = itemsOfType.filter(
-            (item) => item.id !== typeItems[typeItem].id
-          );
-        });
-      });
-      console.log(itemsOfType)
-      return itemsOfType
-    }
-  }
+  }, []);
 
   const removeItemSelected = (item) => {
     let itemsObj = { ...itemsSelected };
     delete itemsObj[item];
     setItemsSelected(itemsObj);
-  }
-  
+  };
 
-  function saveCollections(itemsSelected) {
-    // Object.keys(collectionObj).forEach(item => collectionObj[item])
-    setItemsCollection((old) => [...old, itemsSelected]);
-    setItemsSelected({})
-    filterOutSelectedItems()
-  }
+  // function saveCollections(itemsSelected) {
+  //   // Object.keys(collectionObj).forEach(item => collectionObj[item])
+  //   setItemsCollection((old) => [...old, itemsSelected]);
+  //   setItemsSelected({});
+  // }
 
-  
-  
-  const allContextProps = {items, setItems, itemsSelected, setItemsSelected, saveCollections, removeItemSelected, itemsCollection}
+  const allContextProps = {
+    items,
+    setItems,
+    filterType,
+    setFilterType,
+    filterItems,
+    setFilterItems,
+    itemsSelected,
+    setItemsSelected,
+    showAlert,
+    setshowAlert,
+    removeItemSelected,
+    itemsCollection,
+    setItemsCollection,
+  };
 
   return (
     <DataContext.Provider value={{ ...allContextProps }}>

@@ -1,30 +1,37 @@
-
 import React, { useContext, useState, useEffect } from "react";
 
-import { DataContext } from '../Context';
-
+import { DataContext } from "../Context";
 
 import { Button, Badge, ListGroup, Row, Col, Card } from "react-bootstrap";
 import ItemsSelectedInfo from "../ItemsSelectedInfo";
 import AlertSaveCollections from "../AlertSaveCollections";
 
-const Home = ({ moovCollections, deleteItem, moovToSelectedItems }) => {
-  const [filterType, setFilterType] = useState("");
-  const [filterItems, setFilterItems] = useState([]);
+const Home = ({ moovCollections, deleteItem }) => {
   // const [itemsSelected, setItemsSelected] = useState({});
   const [showAlert, setshowAlert] = useState(false);
   const [selectedTypes, setSelectedTypes] = useState([]);
 
   const allContextProps = useContext(DataContext);
-  const {items, itemsSelected, setItemsSelected} = {...allContextProps};
-  
-// console.log(allContextProps)
+  const {
+    items,
+    setItems,
+    filterType,
+    setFilterType,
+    filterItems,
+    setFilterItems,
+    itemsSelected,
+    setItemsSelected,
+    itemsCollection,
+
+    setItemsCollection,
+  } = { ...allContextProps };
+
+  // console.log(items);
   useEffect(() => {
     filterItemsByType(items, filterType);
   }, [filterType, itemsSelected]);
 
   function createTypesList(items) {
-    if(!items) return <h3>no items</h3>
     const types = [];
     for (const item of items) {
       if (!types.includes(item.type)) {
@@ -47,9 +54,7 @@ const Home = ({ moovCollections, deleteItem, moovToSelectedItems }) => {
   }
 
   function addToSelectedItems(item) {
-
     setItemsSelected({ ...itemsSelected, [item.type]: item });
-    
   }
 
   const typesButtons = createTypesList(items).map((type, index) => {
@@ -122,27 +127,18 @@ const Home = ({ moovCollections, deleteItem, moovToSelectedItems }) => {
   //   setshowAlert(true);
   //   setItemsSelected([]);
   // }
-  function saveSelectedItems() {
-    moovCollections(itemsSelected);
-    setFilterType("");
-    setItemsSelected({});
-    setFilterItems([]);
-    setshowAlert(true);
-  }
 
-  function isShowAlert() {
-    setshowAlert(false);
-  }
+  // const saveSelectedItems = () => {
+  //   setFilterItems([]);
+  //   setshowAlert(true);
+  // };
 
   if (!items) return <h2>Loading...</h2>;
 
   return (
     <div className="home">
-      <ItemsSelectedInfo
-        deleteItem={deleteItem}
-        saveCollections={saveSelectedItems}
-      />
-      <AlertSaveCollections showAlert={showAlert} isShowAlert={isShowAlert} />
+      {/* <ItemsSelectedInfo deleteItem={deleteItem} /> */}
+      <AlertSaveCollections />
 
       <h2>home</h2>
       <div className="typesName">{typesButtons}</div>
@@ -151,8 +147,6 @@ const Home = ({ moovCollections, deleteItem, moovToSelectedItems }) => {
           {filteredItemsCards}
         </Row>
       </div>
-      
-      
     </div>
   );
 };

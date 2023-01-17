@@ -1,8 +1,7 @@
 import React from "react";
 import { useRef, useState, useEffect } from "react";
 
-
-import {DataProvider} from './Context';
+import { DataProvider } from "./Context";
 
 // react-router
 import NavbarTop from "./NavbarTop";
@@ -17,8 +16,6 @@ import Home from "./pages/Home";
 import Collection from "./pages/Collection";
 import NoPage from "./pages/NoPage";
 
-import ItemsSelectedInfo from "./ItemsSelectedInfo";
-
 import "./App.scss";
 
 async function getData() {
@@ -31,10 +28,8 @@ async function getData() {
 
 function App() {
   const [items, setItems] = useState([]);
-  const [itemsSelected, setItemsSelected] = useState({});
   const [collection, setCollection] = useState([]);
 
-  
   useEffect(() => {
     getData().then((data) => setItems(data));
   }, []);
@@ -45,8 +40,6 @@ function App() {
   //   }
   // }, [collection]);
 
-  
-
   // function saveSelectedItems() {
   //   moovCollections(itemsSelected);
   //   setFilterType("");
@@ -55,10 +48,10 @@ function App() {
   //   setshowAlert(true);
   // }
 
-  function moovCollections(collectionObj) {
-    // Object.keys(collectionObj).forEach(item => collectionObj[item])
-    setCollection((old) => [...old, collectionObj]);
-  }
+  // function moovCollections(collectionObj) {
+  //   // Object.keys(collectionObj).forEach(item => collectionObj[item])
+  //   setCollection((old) => [...old, collectionObj]);
+  // }
 
   // function filterOutSelectedItems() {
   //   let itemsOfType = [...items];
@@ -90,27 +83,19 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <DataProvider>
-        <NavbarTop />
-        <Container>
-          <Routes>
-            <Route
-              index
-              element={<Home/>}
-            />
-            <Route
-              path="/collection"
-              element={<Collection/>}
-            />
-            <Route path="*" element={<NoPage />} />
-          </Routes>
-          <Button onClick={() => deleteCollection(0)}>Delete</Button>
-        </Container>
+        <DataProvider>
+          <NavbarTop />
+          <Container>
+            <Routes>
+              <Route index element={<Home />} />
+              <Route path="/collection" element={<Collection />} />
+              <Route path="*" element={<NoPage />} />
+            </Routes>
+          </Container>
         </DataProvider>
       </BrowserRouter>
     </div>
   );
 }
-
 
 export default App;

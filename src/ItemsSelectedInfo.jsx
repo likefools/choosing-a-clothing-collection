@@ -1,6 +1,6 @@
 import React, { useContext, useState, useRef } from "react";
 
-import { DataContext } from './Context';
+import { DataContext } from "./Context";
 
 import Button from "react-bootstrap/Button";
 import Overlay from "react-bootstrap/Overlay";
@@ -8,10 +8,21 @@ import Popover from "react-bootstrap/Popover";
 
 import { FaShoppingCart } from "react-icons/fa";
 
-const ItemsSelectedInfo = (props) => {
-
+const ItemsSelectedInfo = () => {
   const allContextProps = useContext(DataContext);
-  const {itemsSelected, removeItemSelected, saveCollections} = {...allContextProps};
+  const {
+    items,
+    itemsSelected,
+    setFilterType,
+    setFilterItems,
+    setItemsSelected,
+    setItems,
+    setshowAlert,
+    removeItemSelected,
+    setItemsCollection,
+  } = {
+    ...allContextProps,
+  };
 
   // const {  } = props;
 
@@ -25,9 +36,24 @@ const ItemsSelectedInfo = (props) => {
   };
 
   const deleteItem = (item) => {
-    removeItemSelected(item)
-  }
+    removeItemSelected(item);
+  };
 
+  //TODO להאביר ל Context
+  const saveCollections = (collection) => {
+    let itemsOfType = [...items];
+    Object.keys(collection).forEach((typeItems) => {
+      itemsOfType = itemsOfType.filter(
+        (i) => i.id !== collection[typeItems].id
+      );
+    });
+    setItems(itemsOfType);
+    setItemsCollection((old) => [...old, itemsSelected]);
+    setItemsSelected({});
+    setFilterType("");
+    setFilterItems([]);
+    setshowAlert(true);
+  };
 
   // onClick={() => getItemSelected(oldValues => {return oldValues.filter(item => item !== value)})}
 
@@ -35,8 +61,8 @@ const ItemsSelectedInfo = (props) => {
     <div className="itemsSelectedInfo">
       <div ref={ref}>
         <Button onClick={handleClick}>
-        <FaShoppingCart size={20} className="mr-2" />{' '}
-          items Selected {Object.keys(itemsSelected).length}
+          <FaShoppingCart size={20} className="mr-2" /> items Selected{" "}
+          {Object.keys(itemsSelected).length}
         </Button>
 
         <Overlay
@@ -50,7 +76,7 @@ const ItemsSelectedInfo = (props) => {
             <Popover.Header as="h3">
               <div className="item">
                 {Object.keys(itemsSelected) ? "Collections " : "no items "}
-                
+
                 <Button
                   size="sm"
                   variant="success"
@@ -67,7 +93,7 @@ const ItemsSelectedInfo = (props) => {
             {Object.keys(itemsSelected).map((item, index) => (
               <Popover.Body key={index}>
                 <div className="item">
-                  {itemsSelected[item].type} {itemsSelected[item].brand}
+                  {itemsSelected[item].type} {itemsSelected[item].brand}{" "}
                   <Button
                     size="sm"
                     variant="danger"
