@@ -16,29 +16,32 @@ const Collection = () => {
 
   useEffect(() => {
     setCollection(itemsCollection);
-  }, [collection]);
+  }, []);
 
   const deletecollectionSeat = (collectionSeat, index) => {
     setItems((old) => [...old, ...collectionSeat]);
     const newCollection = collection;
     newCollection.splice(index, 1);
     setItemsCollection(newCollection);
+    const currentCollection =
+      JSON.parse(localStorage.getItem("collection")) || [];
+    currentCollection.splice(index, 1);
+    localStorage.setItem("collection", JSON.stringify(currentCollection));
   };
 
   if (!collection) return <h2>no items</h2>;
-
-  const getCollection = collection?.map((item, index) => {
+  console.log(collection);
+  const getCollection = collection?.map((items, index) => {
     return (
       <div key={index} className="itemsCard">
         <h4>collection {index + 1}</h4>
         <Row xs={3} md={3} lg={4} className="g-2">
-          {Object.keys(item).map((typeItem, index) => {
-            // return <div key={index}>{item[typeItem].brand}</div>
+          {items.map((item) => {
             return (
-              <Col key={index}>
+              <Col key={item.id}>
                 <Card>
                   <Card.Header className="text-center">
-                    <h4>{item[typeItem].type}</h4>
+                    <h4>{item.type}</h4>
                   </Card.Header>
                   <Card.Img
                     variant="top"
@@ -47,13 +50,13 @@ const Collection = () => {
                   <Card.Body>
                     <div className="properties">
                       <h5>
-                        size: <span>{item[typeItem].size}</span>
+                        size: <span>{item.size}</span>
                       </h5>
                       <h5>
                         color:{" "}
                         <span
                           className="color"
-                          style={{ backgroundColor: item[typeItem].color }}
+                          style={{ backgroundColor: item.color }}
                         ></span>
                       </h5>
                     </div>
@@ -66,9 +69,7 @@ const Collection = () => {
         <Button
           variant="danger"
           className="my-2"
-          onClick={() =>
-            deletecollectionSeat(Object.keys(item).map((i) => item[i], index))
-          }
+          onClick={() => deletecollectionSeat(items, index)}
         >
           Delete
         </Button>

@@ -1,5 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 
+const storedCollection = JSON.parse(localStorage.getItem("collection"));
+
 export const DataContext = createContext();
 
 async function getData() {
@@ -13,7 +15,9 @@ async function getData() {
 export function DataProvider({ children }) {
   const [items, setItems] = useState([]);
   const [itemsSelected, setItemsSelected] = useState({});
-  const [itemsCollection, setItemsCollection] = useState([]);
+  const [itemsCollection, setItemsCollection] = useState(
+    storedCollection ? [...storedCollection] : []
+  );
   const [filterType, setFilterType] = useState("");
   const [filterItems, setFilterItems] = useState([]);
   const [showAlert, setshowAlert] = useState(false);

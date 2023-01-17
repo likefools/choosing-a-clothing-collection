@@ -19,6 +19,7 @@ const ItemsSelectedInfo = () => {
     setItems,
     setshowAlert,
     removeItemSelected,
+    itemsCollection,
     setItemsCollection,
   } = {
     ...allContextProps,
@@ -41,18 +42,25 @@ const ItemsSelectedInfo = () => {
 
   //TODO להאביר ל Context
   const saveCollections = (collection) => {
+    collection = Object.keys(collection).map(
+      (typeItems) => collection[typeItems]
+    );
     let itemsOfType = [...items];
-    Object.keys(collection).forEach((typeItems) => {
-      itemsOfType = itemsOfType.filter(
-        (i) => i.id !== collection[typeItems].id
-      );
+    collection.forEach((typeItems) => {
+      itemsOfType = itemsOfType.filter((i) => i.id !== typeItems.id);
     });
     setItems(itemsOfType);
-    setItemsCollection((old) => [...old, itemsSelected]);
+    setItemsCollection((old) => [...old, collection]);
     setItemsSelected({});
     setFilterType("");
     setFilterItems([]);
     setshowAlert(true);
+    const currentCollection =
+      JSON.parse(localStorage.getItem("collection")) || [];
+    const updatedCollection = currentCollection
+      ? [...currentCollection, collection]
+      : [collection];
+    localStorage.setItem("collection", JSON.stringify(updatedCollection));
   };
 
   // onClick={() => getItemSelected(oldValues => {return oldValues.filter(item => item !== value)})}
