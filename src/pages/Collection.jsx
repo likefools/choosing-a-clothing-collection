@@ -20,9 +20,11 @@ const Collection = () => {
 
   const deletecollectionSeat = (collectionSeat, index) => {
     setItems((old) => [...old, ...collectionSeat]);
-    const newCollection = collection;
+
+    const newCollection = itemsCollection;
     newCollection.splice(index, 1);
     setItemsCollection(newCollection);
+
     const currentCollection =
       JSON.parse(localStorage.getItem("collection")) || [];
     currentCollection.splice(index, 1);
@@ -30,8 +32,7 @@ const Collection = () => {
   };
 
   if (!collection) return <h2>no items</h2>;
-  console.log(collection);
-  const getCollection = collection?.map((items, index) => {
+  const getCollection = itemsCollection?.map((items, index) => {
     return (
       <div key={index} className="itemsCard">
         <h4>collection {index + 1}</h4>

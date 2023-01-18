@@ -50,7 +50,7 @@ const ItemsSelectedInfo = () => {
       itemsOfType = itemsOfType.filter((i) => i.id !== typeItems.id);
     });
     setItems(itemsOfType);
-    setItemsCollection((old) => [...old, collection]);
+    setItemsCollection((old) => [collection, ...old]);
     setItemsSelected({});
     setFilterType("");
     setFilterItems([]);
@@ -58,7 +58,7 @@ const ItemsSelectedInfo = () => {
     const currentCollection =
       JSON.parse(localStorage.getItem("collection")) || [];
     const updatedCollection = currentCollection
-      ? [...currentCollection, collection]
+      ? [collection, ...currentCollection]
       : [collection];
     localStorage.setItem("collection", JSON.stringify(updatedCollection));
   };

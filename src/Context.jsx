@@ -16,16 +16,25 @@ export function DataProvider({ children }) {
   const [items, setItems] = useState([]);
   const [itemsSelected, setItemsSelected] = useState({});
   const [itemsCollection, setItemsCollection] = useState(
-    storedCollection ? [...storedCollection] : []
+    storedCollection ? storedCollection : []
   );
   const [filterType, setFilterType] = useState("");
   const [filterItems, setFilterItems] = useState([]);
   const [showAlert, setshowAlert] = useState(false);
+
   useEffect(() => {
     async function fetchData() {
       const data = await getData();
-      setItems(data);
-      // filterOutSelectedItems()
+      if (storedCollection.length > 0) {
+        const collection = storedCollection.flat();
+        const storedIds = collection.map((item) => item.id);
+        const updatedItems = data.filter(
+          (item) => !storedIds.includes(item.id)
+        );
+        setItems(updatedItems);
+      } else {
+        setItems(data);
+      }
     }
     fetchData();
   }, []);
@@ -35,12 +44,6 @@ export function DataProvider({ children }) {
     delete itemsObj[item];
     setItemsSelected(itemsObj);
   };
-
-  // function saveCollections(itemsSelected) {
-  //   // Object.keys(collectionObj).forEach(item => collectionObj[item])
-  //   setItemsCollection((old) => [...old, itemsSelected]);
-  //   setItemsSelected({});
-  // }
 
   const allContextProps = {
     items,
