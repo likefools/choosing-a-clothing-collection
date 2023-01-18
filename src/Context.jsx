@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 
 const storedCollection = JSON.parse(localStorage.getItem("collection"));
-
+const storedDatatime = JSON.parse(localStorage.getItem("dataTime"));
 export const DataContext = createContext();
 
 async function getData() {
@@ -21,11 +21,12 @@ export function DataProvider({ children }) {
   const [filterType, setFilterType] = useState("");
   const [filterItems, setFilterItems] = useState([]);
   const [showAlert, setshowAlert] = useState(false);
+  const [startTimeDate, setStartTimeDate] = useState(storedDatatime ? [...storedDatatime] : []);
 
   useEffect(() => {
     async function fetchData() {
       const data = await getData();
-      if (storedCollection.length > 0) {
+      if (storedCollection) {
         const collection = storedCollection.flat();
         const storedIds = collection.map((item) => item.id);
         const updatedItems = data.filter(
@@ -59,6 +60,8 @@ export function DataProvider({ children }) {
     removeItemSelected,
     itemsCollection,
     setItemsCollection,
+    startTimeDate,
+    setStartTimeDate,
   };
 
   return (

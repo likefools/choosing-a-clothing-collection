@@ -7,32 +7,42 @@ import { Button, Col, Card, Row } from "react-bootstrap";
 
 const Collection = () => {
   const allContextProps = useContext(DataContext);
-  const { itemsCollection, setItemsCollection, setItems } = {
+  const { itemsCollection, setItemsCollection, setItems, startTimeDate, setStartTimeDate } = {
     ...allContextProps,
   };
   // const collection = itemsCollection;
 
   const [collection, setCollection] = useState();
+  const [dataTime, setDatatime] = useState();
 
   useEffect(() => {
     setCollection(itemsCollection);
-  }, []);
+    setDatatime(startTimeDate)
+  }, [itemsCollection]);
 
   const deletecollectionSeat = (collectionSeat, index) => {
     setItems((old) => [...old, ...collectionSeat]);
-
     const newCollection = itemsCollection;
     newCollection.splice(index, 1);
     setItemsCollection(newCollection);
+
+    const newDateTime = startTimeDate;
+    newDateTime.splice(index, 1);
+    setStartTimeDate(newDateTime);
 
     const currentCollection =
       JSON.parse(localStorage.getItem("collection")) || [];
     currentCollection.splice(index, 1);
     localStorage.setItem("collection", JSON.stringify(currentCollection));
+
+    const currentDateTime =
+      JSON.parse(localStorage.getItem("dataTime")) || [];
+      currentDateTime.splice(index, 1);
+    localStorage.setItem("dataTime", JSON.stringify(currentDateTime));
   };
 
   if (!collection) return <h2>no items</h2>;
-  const getCollection = itemsCollection?.map((items, index) => {
+  const getCollection = collection?.map((items, index) => {
     return (
       <div key={index} className="itemsCard">
         <h4>collection {index + 1}</h4>
@@ -74,6 +84,7 @@ const Collection = () => {
         >
           Delete
         </Button>
+        {dataTime ? dataTime[index] : ''}
       </div>
     );
   });
@@ -85,6 +96,7 @@ const Collection = () => {
           ? "collection"
           : "no collection items"}
       </h2>
+      
       {getCollection}
     </div>
   );

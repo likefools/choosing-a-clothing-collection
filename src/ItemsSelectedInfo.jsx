@@ -21,6 +21,7 @@ const ItemsSelectedInfo = () => {
     removeItemSelected,
     itemsCollection,
     setItemsCollection,
+    setStartTimeDate,
   } = {
     ...allContextProps,
   };
@@ -40,11 +41,17 @@ const ItemsSelectedInfo = () => {
     removeItemSelected(item);
   };
 
+  const setDataTime = () => {
+    let startTimeD = new Date();
+    return startTimeD = `${startTimeD.toLocaleDateString()} ${startTimeD.toLocaleTimeString()}`
+  }
+
   //TODO להאביר ל Context
   const saveCollections = (collection) => {
     collection = Object.keys(collection).map(
       (typeItems) => collection[typeItems]
     );
+    
     let itemsOfType = [...items];
     collection.forEach((typeItems) => {
       itemsOfType = itemsOfType.filter((i) => i.id !== typeItems.id);
@@ -55,12 +62,20 @@ const ItemsSelectedInfo = () => {
     setFilterType("");
     setFilterItems([]);
     setshowAlert(true);
+    const dataTime = setDataTime()
+    setStartTimeDate((oldDataTime) => [dataTime, ...oldDataTime])
     const currentCollection =
       JSON.parse(localStorage.getItem("collection")) || [];
     const updatedCollection = currentCollection
       ? [collection, ...currentCollection]
       : [collection];
     localStorage.setItem("collection", JSON.stringify(updatedCollection));
+
+    const currentDataTime = JSON.parse(localStorage.getItem("dataTime")) || [];
+    const updatedDataTime = currentDataTime
+    ? [dataTime, ...currentDataTime]
+    : [dataTime];
+    localStorage.setItem("dataTime", JSON.stringify(updatedDataTime));
   };
 
   // onClick={() => getItemSelected(oldValues => {return oldValues.filter(item => item !== value)})}
