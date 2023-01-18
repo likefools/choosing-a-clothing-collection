@@ -43,15 +43,15 @@ const ItemsSelectedInfo = () => {
 
   const setDataTime = () => {
     let startTimeD = new Date();
-    return startTimeD = `${startTimeD.toLocaleDateString()} ${startTimeD.toLocaleTimeString()}`
-  }
+    return (startTimeD = `${startTimeD.toLocaleDateString()} ${startTimeD.toLocaleTimeString()}`);
+  };
 
   //TODO להאביר ל Context
   const saveCollections = (collection) => {
     collection = Object.keys(collection).map(
       (typeItems) => collection[typeItems]
     );
-    
+
     let itemsOfType = [...items];
     collection.forEach((typeItems) => {
       itemsOfType = itemsOfType.filter((i) => i.id !== typeItems.id);
@@ -62,8 +62,8 @@ const ItemsSelectedInfo = () => {
     setFilterType("");
     setFilterItems([]);
     setshowAlert(true);
-    const dataTime = setDataTime()
-    setStartTimeDate((oldDataTime) => [dataTime, ...oldDataTime])
+    const dataTime = setDataTime();
+    setStartTimeDate((oldDataTime) => [dataTime, ...oldDataTime]);
     const currentCollection =
       JSON.parse(localStorage.getItem("collection")) || [];
     const updatedCollection = currentCollection
@@ -73,19 +73,24 @@ const ItemsSelectedInfo = () => {
 
     const currentDataTime = JSON.parse(localStorage.getItem("dataTime")) || [];
     const updatedDataTime = currentDataTime
-    ? [dataTime, ...currentDataTime]
-    : [dataTime];
+      ? [dataTime, ...currentDataTime]
+      : [dataTime];
     localStorage.setItem("dataTime", JSON.stringify(updatedDataTime));
   };
 
-  // onClick={() => getItemSelected(oldValues => {return oldValues.filter(item => item !== value)})}
+  const title = Object.keys(itemsSelected) ? "Collections " : "no items ";
+
+  const seveButtonDisabled =
+    Object.keys(itemsSelected).length !== 3 ? true : false;
+
+  const itemsSelectedCount = Object.keys(itemsSelected).length;
 
   return (
     <div className="itemsSelectedInfo">
       <div ref={ref}>
         <Button onClick={handleClick}>
           <FaShoppingCart size={20} className="mr-2" /> items Selected{" "}
-          {Object.keys(itemsSelected).length}
+          {itemsSelectedCount}
         </Button>
 
         <Overlay
@@ -98,14 +103,12 @@ const ItemsSelectedInfo = () => {
           <Popover id="popover-contained">
             <Popover.Header as="h3">
               <div className="item">
-                {Object.keys(itemsSelected) ? "Collections " : "no items "}
+                {title}
 
                 <Button
                   size="sm"
                   variant="success"
-                  disabled={
-                    Object.keys(itemsSelected).length !== 3 ? true : false
-                  }
+                  disabled={seveButtonDisabled}
                   onClick={() => saveCollections(itemsSelected)}
                 >
                   Save
