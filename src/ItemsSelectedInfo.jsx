@@ -76,12 +76,13 @@ const ItemsSelectedInfo = () => {
       ? [dataTime, ...currentDataTime]
       : [dataTime];
     localStorage.setItem("dataTime", JSON.stringify(updatedDataTime));
+
+    setShow(!show);
   };
 
   const title = Object.keys(itemsSelected) ? "Collections " : "no items ";
 
-  const seveButtonDisabled =
-    Object.keys(itemsSelected).length !== 3 ? true : false;
+  const seveButtonDisabled = Object.keys(itemsSelected).length !== 3 ? true : false;
 
   const itemsSelectedCount = Object.keys(itemsSelected).length;
 

@@ -5,6 +5,10 @@ import { DataContext } from "../Context";
 
 import { Button, Col, Card, Row } from "react-bootstrap";
 
+import pants from "../assets/pants.jpg";
+import shirt from "../assets/shirt.jpg";
+import shoes from "../assets/shoes.jpg";
+
 const Collection = () => {
   const allContextProps = useContext(DataContext);
   const { itemsCollection, setItemsCollection, setItems, startTimeDate, setStartTimeDate } = {
@@ -41,6 +45,20 @@ const Collection = () => {
     localStorage.setItem("dataTime", JSON.stringify(currentDateTime));
   };
 
+  const imgType = (itemType) => {
+    let imgUrl = "";
+    if (itemType === "shirt") {
+      imgUrl = shirt;
+    }
+    if (itemType === "pants") {
+      imgUrl = pants;
+    }
+    if (itemType === "shoes") {
+      imgUrl = shoes;
+    }
+    return imgUrl;
+  };
+
   if (!collection) return <h2>no items</h2>;
   const getCollection = collection?.map((items, index) => {
     return (
@@ -54,10 +72,9 @@ const Collection = () => {
                   <Card.Header className="text-center">
                     <h4>{item.type}</h4>
                   </Card.Header>
-                  <Card.Img
-                    variant="top"
-                    src="https://store.mbit.co.il/wp-content/uploads/2020/09/tshirt-2.jpg"
-                  />
+                  <div className="cardImg">
+                    <Card.Img variant="top" src={imgType(item.type)} />
+                  </div>
                   <Card.Body>
                     <div className="properties">
                       <h5>

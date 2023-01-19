@@ -34,12 +34,16 @@
 
 .itemsCard{
   margin: 1rem 0;
-  
+
+  .cardImg{
+    padding: 0.8rem;
+    background-color: #eee;
+    img{
+      border-radius: 6px;
+      box-shadow: 0 2px 6px 1px rgba(0, 0, 0, 0.3);
+    }
+  }
   .properties{
-    // padding: 0.2rem;
-    // display: flex;
-    // align-items: center;
-    // gap: 0.5rem;
     h5{
       display: flex;
       align-items: flex-end;
