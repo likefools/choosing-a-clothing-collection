@@ -5,9 +5,10 @@ import { DataContext } from "../Context";
 import { Button, Badge, Row, Col, Card } from "react-bootstrap";
 import ItemsList from "../ItemsList";
 import AlertSaveCollections from "../AlertSaveCollections";
+import { Next } from "react-bootstrap/esm/PageItem";
 
 const Home = () => {
-  const [selectedTypes, setSelectedTypes] = useState([]);
+  
 
   const allContextProps = useContext(DataContext);
   const {
@@ -22,7 +23,13 @@ const Home = () => {
   // console.log(items);
   useEffect(() => {
     filterItemsByType(filterType);
-  }, [filterType]);
+    if(Object.keys(itemsSelected).length > 0 && Object.keys(itemsSelected).length < 3){
+      console.log(itemsSelected)
+      nextItemsfilter()
+    }
+  }, [filterType, itemsSelected]);
+
+  const types = createTypesList()
 
   function createTypesList() {
     const types = [];
@@ -34,8 +41,16 @@ const Home = () => {
     return types;
   }
 
-  function setActiveType(typeName) {
-    setFilterType(typeName);
+
+  // function setActiveType(typeName) {
+  //   setFilterType(typeName);
+  // }
+
+  const nextItemsfilter = () => {
+    const nextItem = types.filter(type => !Object.keys(itemsSelected).includes(type))[0]
+    console.log(nextItem)
+    itemsOfType = itemsOfType.filter((item) => item.type === nextItem);
+    
   }
 
   function filterItemsByType(filterType) {
@@ -46,14 +61,14 @@ const Home = () => {
     }
   }
 
-  const typesButtons = createTypesList().map((type, index) => {
+  const typesButtons = types.map((type, index) => {
     return (
       <Button
         disabled={filterType == type ? true : false}
         key={index}
         onClick={() => {
           setFilterType(type);
-          setSelectedTypes([...selectedTypes, type]);
+          
         }}
       >
         {type}{" "}

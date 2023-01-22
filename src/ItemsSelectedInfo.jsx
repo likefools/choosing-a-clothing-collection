@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 
 import { DataContext } from "./Context";
 
@@ -31,6 +31,7 @@ const ItemsSelectedInfo = () => {
   const [show, setShow] = useState(false);
   const [target, setTarget] = useState(null);
   const ref = useRef(null);
+  
 
   const handleClick = (event) => {
     setShow(!show);

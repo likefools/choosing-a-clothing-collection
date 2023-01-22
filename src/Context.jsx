@@ -18,6 +18,7 @@ export function DataProvider({ children }) {
   const [itemsCollection, setItemsCollection] = useState(
     storedCollection ? storedCollection : []
   );
+
   const [filterType, setFilterType] = useState("");
   const [filterItems, setFilterItems] = useState([]);
   const [showAlert, setshowAlert] = useState(false);
@@ -46,6 +47,8 @@ export function DataProvider({ children }) {
     setItemsSelected(itemsObj);
   };
 
+  
+
   const allContextProps = {
     items,
     setItems,
@@ -53,6 +56,8 @@ export function DataProvider({ children }) {
     setFilterType,
     filterItems,
     setFilterItems,
+    // nextFilterItems,
+
     itemsSelected,
     setItemsSelected,
     showAlert,

@@ -8,12 +8,14 @@ import shoes from "./assets/shoes.jpg";
 
 const ItemsList = () => {
   const allContextProps = useContext(DataContext);
-  const { itemsSelected, setItemsSelected, filterType, filterItems } = {
+  const { items, itemsSelected, setItemsSelected, filterType, setFilterItems, filterItems, nextFilterItems } = {
     ...allContextProps,
   };
 
+  
   function addToSelectedItems(item) {
     setItemsSelected({ ...itemsSelected, [item.type]: item });
+
   }
 
   const itemsSelectedButtonDisabled = (item) =>
