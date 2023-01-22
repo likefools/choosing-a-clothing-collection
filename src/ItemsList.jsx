@@ -44,14 +44,15 @@ const ItemsList = () => {
               <Card.Header className="text-center">
                 <h3>{item.brand}</h3>
               </Card.Header>
-              <div className="cardImg"
+              <div
+                className="cardImg"
                 // style={{
                 //   backgroundColor: item.color !== "white" ? item.color : "#eee",
                 // }}
               >
                 <Card.Img variant="top" src={imgType()} />
               </div>
-              <Card.Body>
+              <Card.Body className="cardBody">
                 <div className="properties">
                   <h5>
                     size: <span>{item.size}</span>
@@ -61,18 +62,19 @@ const ItemsList = () => {
                     <span
                       className="color"
                       style={{
-                        backgroundColor:item.color !== "white" ? item.color : "#eee",
+                        backgroundColor:
+                          item.color !== "white" ? item.color : "#eee",
                       }}
                     ></span>
                   </h5>
-                </div>
 
-                <Button
-                  disabled={itemsSelectedButtonDisabled(item)}
-                  onClick={() => addToSelectedItems(item)}
-                >
-                  Add to selection
-                </Button>
+                  <Button
+                    disabled={itemsSelectedButtonDisabled(item)}
+                    onClick={() => addToSelectedItems(item)}
+                  >
+                    Add to selection
+                  </Button>
+                </div>
               </Card.Body>
             </Card>
           </Col>
