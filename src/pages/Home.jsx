@@ -8,8 +8,6 @@ import AlertSaveCollections from "../AlertSaveCollections";
 import { Next } from "react-bootstrap/esm/PageItem";
 
 const Home = () => {
-  
-
   const allContextProps = useContext(DataContext);
   const {
     items,
@@ -23,13 +21,16 @@ const Home = () => {
   // console.log(items);
   useEffect(() => {
     filterItemsByType(filterType);
-    if(Object.keys(itemsSelected).length > 0 && Object.keys(itemsSelected).length < 3){
-      console.log(itemsSelected)
-      nextItemsfilter()
+    if (
+      Object.keys(itemsSelected).length > 0 &&
+      Object.keys(itemsSelected).length < 3
+    ) {
+      console.log(itemsSelected);
+      nextItemsfilter();
     }
   }, [filterType, itemsSelected]);
 
-  const types = createTypesList()
+  const types = createTypesList();
 
   function createTypesList() {
     const types = [];
@@ -41,17 +42,18 @@ const Home = () => {
     return types;
   }
 
-
   // function setActiveType(typeName) {
   //   setFilterType(typeName);
   // }
 
   const nextItemsfilter = () => {
-    const nextItem = types.filter(type => !Object.keys(itemsSelected).includes(type))[0]
-    console.log(nextItem)
+    let itemsOfType = [...items];
+    const nextItem = types.filter(
+      (type) => !Object.keys(itemsSelected).includes(type)
+    )[0];
+    console.log(nextItem);
     itemsOfType = itemsOfType.filter((item) => item.type === nextItem);
-    
-  }
+  };
 
   function filterItemsByType(filterType) {
     let itemsOfType = [...items];
@@ -68,7 +70,6 @@ const Home = () => {
         key={index}
         onClick={() => {
           setFilterType(type);
-          
         }}
       >
         {type}{" "}

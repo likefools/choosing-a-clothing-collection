@@ -11,7 +11,13 @@ import shoes from "../assets/shoes.jpg";
 
 const Collection = () => {
   const allContextProps = useContext(DataContext);
-  const { itemsCollection, setItemsCollection, setItems, startTimeDate, setStartTimeDate } = {
+  const {
+    itemsCollection,
+    setItemsCollection,
+    setItems,
+    startTimeDate,
+    setStartTimeDate,
+  } = {
     ...allContextProps,
   };
   // const collection = itemsCollection;
@@ -21,7 +27,7 @@ const Collection = () => {
 
   useEffect(() => {
     setCollection(itemsCollection);
-    setDatatime(startTimeDate)
+    setDatatime(startTimeDate);
   }, [itemsCollection]);
 
   const deletecollectionSeat = (collectionSeat, index) => {
@@ -39,9 +45,8 @@ const Collection = () => {
     currentCollection.splice(index, 1);
     localStorage.setItem("collection", JSON.stringify(currentCollection));
 
-    const currentDateTime =
-      JSON.parse(localStorage.getItem("dataTime")) || [];
-      currentDateTime.splice(index, 1);
+    const currentDateTime = JSON.parse(localStorage.getItem("dataTime")) || [];
+    currentDateTime.splice(index, 1);
     localStorage.setItem("dataTime", JSON.stringify(currentDateTime));
   };
 
@@ -101,7 +106,7 @@ const Collection = () => {
         >
           Delete
         </Button>
-        {dataTime ? dataTime[index] : ''}
+        {dataTime ? dataTime[index] : ""}
       </div>
     );
   });
@@ -113,7 +118,7 @@ const Collection = () => {
           ? "collection"
           : "no collection items"}
       </h2>
-      
+
       {getCollection}
     </div>
   );
