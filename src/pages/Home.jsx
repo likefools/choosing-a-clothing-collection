@@ -51,15 +51,25 @@ const Home = () => {
     const nextItem = types.filter(
       (type) => !Object.keys(itemsSelected).includes(type)
     )[0];
-    console.log(nextItem);
+    const colorItemsSelected = Object.keys(itemsSelected);
+    console.log(Object.keys(itemsSelected));
     itemsOfType = itemsOfType.filter((item) => item.type === nextItem);
+    // itemsOfType = filterBytypeSelected(itemsOfType)
+    setFilterType(nextItem);
+    setFilterItems(itemsOfType);
+    
   };
+
+  function filterBytypeSelected(itemsOfType){
+    const colorItemsSelected = Object.keys(itemsSelected)[0].color;
+  }
 
   function filterItemsByType(filterType) {
     let itemsOfType = [...items];
     if (filterType) {
       itemsOfType = itemsOfType.filter((item) => item.type === filterType);
       setFilterItems(itemsOfType);
+
     }
   }
 
