@@ -31,7 +31,6 @@ const ItemsSelectedInfo = () => {
   const [show, setShow] = useState(false);
   const [target, setTarget] = useState(null);
   const ref = useRef(null);
-  
 
   const handleClick = (event) => {
     setShow(!show);
@@ -83,7 +82,8 @@ const ItemsSelectedInfo = () => {
 
   const title = Object.keys(itemsSelected) ? "Collections " : "no items ";
 
-  const seveButtonDisabled = Object.keys(itemsSelected).length !== 3 ? true : false;
+  const seveButtonDisabled =
+    Object.keys(itemsSelected).length !== 3 ? true : false;
 
   const itemsSelectedCount = Object.keys(itemsSelected).length;
 

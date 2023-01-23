@@ -22,7 +22,9 @@ export function DataProvider({ children }) {
   const [filterType, setFilterType] = useState("");
   const [filterItems, setFilterItems] = useState([]);
   const [showAlert, setshowAlert] = useState(false);
-  const [startTimeDate, setStartTimeDate] = useState(storedDatatime ? [...storedDatatime] : []);
+  const [startTimeDate, setStartTimeDate] = useState(
+    storedDatatime ? [...storedDatatime] : []
+  );
 
   useEffect(() => {
     async function fetchData() {
@@ -41,13 +43,22 @@ export function DataProvider({ children }) {
     fetchData();
   }, []);
 
+  function createTypesList() {
+    const types = [];
+    for (const item of items) {
+      if (!types.includes(item.type)) {
+        types.push(item.type);
+      }
+    }
+    return types;
+  }
+  // const types = createTypesList();
+
   const removeItemSelected = (item) => {
     let itemsObj = { ...itemsSelected };
     delete itemsObj[item];
     setItemsSelected(itemsObj);
   };
-
-  
 
   const allContextProps = {
     items,
@@ -57,7 +68,7 @@ export function DataProvider({ children }) {
     filterItems,
     setFilterItems,
     // nextFilterItems,
-
+    createTypesList,
     itemsSelected,
     setItemsSelected,
     showAlert,

@@ -16,60 +16,54 @@ const Home = () => {
     setFilterItems,
     itemsSelected,
     setItemsSelected,
+    createTypesList,
   } = { ...allContextProps };
 
   // console.log(items);
   useEffect(() => {
     filterItemsByType(filterType);
-    if (
-      Object.keys(itemsSelected).length > 0 &&
-      Object.keys(itemsSelected).length < 3
-    ) {
-      console.log(itemsSelected);
-      nextItemsfilter();
-    }
-  }, [filterType, itemsSelected]);
+    // nextItemsfilter();
+  }, [filterType]);
+
+  useEffect(() => {
+    nextItemsfilter();
+  }, [itemsSelected]);
 
   const types = createTypesList();
-
-  function createTypesList() {
-    const types = [];
-    for (const item of items) {
-      if (!types.includes(item.type)) {
-        types.push(item.type);
-      }
-    }
-    return types;
-  }
-
-  // function setActiveType(typeName) {
-  //   setFilterType(typeName);
-  // }
 
   const nextItemsfilter = () => {
     let itemsOfType = [...items];
     const nextItem = types.filter(
       (type) => !Object.keys(itemsSelected).includes(type)
     )[0];
-    const colorItemsSelected = Object.keys(itemsSelected);
-    console.log(Object.keys(itemsSelected));
+    // const colorItemsSelected = Object.keys(itemsSelected);
+    console.log(nextItem);
     itemsOfType = itemsOfType.filter((item) => item.type === nextItem);
     // itemsOfType = filterBytypeSelected(itemsOfType)
     setFilterType(nextItem);
     setFilterItems(itemsOfType);
-    
   };
 
-  function filterBytypeSelected(itemsOfType){
+  // function setActiveType(typeName) {
+  //   setFilterType(typeName);
+  // }
+
+  function filterBytypeSelected(itemsOfType) {
     const colorItemsSelected = Object.keys(itemsSelected)[0].color;
   }
+  // if (
+  //   Object.keys(itemsSelected).length > 0 &&
+  //   Object.keys(itemsSelected).length < 3
+  // ) {
+  //   console.log(itemsSelected);
+  //   nextItemsfilter();
+  // }
 
   function filterItemsByType(filterType) {
     let itemsOfType = [...items];
     if (filterType) {
       itemsOfType = itemsOfType.filter((item) => item.type === filterType);
       setFilterItems(itemsOfType);
-
     }
   }
 
