@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { DataContext } from "./Context";
 import { Button, Row, Col, Card } from "react-bootstrap";
 
@@ -43,7 +43,7 @@ const ItemsList = () => {
   return (
     <div className="itemsCard">
       <Row xs={2} md={3} lg={4} className="g-2">
-        {filterItems.map((item, index) => (
+        {filterItems?.map((item, index) => (
           <Col key={index}>
             <Card
               style={itemsSelectedButtonDisabled(item) ? { opacity: 0.6 } : {}}

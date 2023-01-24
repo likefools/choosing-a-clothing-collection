@@ -13,6 +13,7 @@ const Home = () => {
     items,
     filterType,
     setFilterType,
+    filterItems,
     setFilterItems,
     itemsSelected,
     setItemsSelected,
@@ -28,66 +29,85 @@ const Home = () => {
     nextItemsfilter();
   }, [itemsSelected]);
 
+  useEffect(() => {
+    setFilterItems(filterItems)
+  }, [filterItems]);
+
   const types = createTypesList();
 
   const nextItemsfilter = () => {
     let itemsOfType = [...items];
-    const nextItem = types.filter(
+    const nextItems = types.filter(
       (type) => !Object.keys(itemsSelected).includes(type)
-    )[0];
-    // const colorItemsSelected = Object.keys(itemsSelected);
-    console.log(nextItem);
-    itemsOfType = itemsOfType.filter((item) => item.type === nextItem);
-    // translateSize("pants", "shirt", 43);
-    // itemsOfType = filterBytypeSelected(itemsOfType);
-    setFilterType(nextItem);
+    );
+    const firstNextItem = nextItems[0]
+    itemsOfType = itemsOfType.filter((item) => item.type === firstNextItem);
+    if(Object.keys(itemsSelected).length > 0){
+      let itemSelected = itemsSelected[Object.keys(itemsSelected)[0]]
+      
+      console.log(firstNextItem);
+      const nextItemSizes = translateSize(itemSelected.type, firstNextItem.type, itemSelected.size);
+
+      itemsOfType = sortBytypeSelected('size', nextItemSizes, itemsOfType);
+    }
+    setFilterType(firstNextItem);
     setFilterItems(itemsOfType);
   };
 
-  const translateSize = (type, typeTo, size) => {
+  const translateSize = (typeSelected, typeTo, size) => {
     // shoes shirt pants
-    let pants = {
+    let pantsArrSize = {
       S: [30, 31, 32],
       L: [34, 35, 36],
       XL: [39, 42, 43],
       XXL: [48],
     };
-    let shoes = {
+    let shoesArrSize = {
       S: [36, 37],
       L: [39],
       XL: [43],
       XXL: [45, 46],
     };
+
     let translatedSize;
     let shirtSize;
     let shoesSize;
     let pantsSize;
-    switch (type) {
+
+    switch (typeSelected) {
       case "pants":
-        shirtSize = translatedSize = Object.keys(pants).filter((key) =>
-          pants[key].includes(size)
+        shirtSize = translatedSize = Object.keys(pantsArrSize).filter((key) =>
+          pantsArrSize[key].includes(size)
         );
-        shoesSize = shoes[shirtSize];
-        typeTo == "shirt" ? shirtSize : shoesSize;
+        shoesSize = shoesArrSize[shirtSize];
+        typeTo == "shirt" ? translatedSize = shirtSize : translatedSize = shoesSize;
         break;
       case "shirt":
         typeTo == "pants"
-          ? (translatedSize = pants[size])
-          : (translatedSize = shoes[size]);
+          ? (translatedSize = pantsArrSize[size])
+          : (translatedSize = shoesArrSize[size]);
         break;
       case "shoes":
-        shirtSize = translatedSize = Object.keys(shoes).filter((key) =>
-          shoes[key].includes(size)
+        shirtSize = translatedSize = Object.keys(shoesArrSize).filter((key) =>
+          shoesArrSize[key].includes(size)
         );
-        pantsSize = pants[shirtSize];
+        pantsSize = pantsArrSize[shirtSize];
         typeTo == "shirt" ? shirtSize : pantsSize;
         break;
     }
+    console.log(translatedSize)
     return translatedSize;
   };
 
-  function filterBytypeSelected(itemsOfType) {
-    const colorItemsSelected = Object.keys(itemsSelected)[0].color;
+  function sortBytypeSelected(type, matchTypes, array) {
+  
+    array.sort((a, b) => {
+      if (matchTypes.includes(a[type]) && !matchTypes.includes(b[type])) return -1;
+      else if (!matchTypes.includes(a[type]) && matchTypes.includes(b[type])) return 1;
+      else return 0;
+    });
+    console.log(array)
+    return array
   }
 
   function filterItemsByType(filterType) {

@@ -43,6 +43,8 @@ export function DataProvider({ children }) {
     fetchData();
   }, []);
 
+  
+
   function createTypesList() {
     const types = [];
     for (const item of items) {
