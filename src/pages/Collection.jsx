@@ -3,7 +3,7 @@ import { useRef, useContext, useState, useEffect } from "react";
 
 import { DataContext } from "../Context";
 
-import { Button, Col, Card, Row } from "react-bootstrap";
+import { Button, Col, Card, Row, Badge, Alert } from "react-bootstrap";
 
 import pants from "../assets/pants.jpg";
 import shirt from "../assets/shirt.jpg";
@@ -99,14 +99,15 @@ const Collection = () => {
             );
           })}
         </Row>
-        <Button
-          variant="danger"
-          className="my-2"
-          onClick={() => deletecollectionSeat(items, index)}
-        >
-          Delete
-        </Button>
-        {dataTime ? dataTime[index] : ""}
+        <div className="infoTimeOrDelete">
+          <Button
+            variant="danger"
+            onClick={() => deletecollectionSeat(items, index)}
+          >
+            Delete
+          </Button>
+          <Alert variant="secondary">{dataTime ? dataTime[index] : ""}</Alert>
+        </div>
       </div>
     );
   });

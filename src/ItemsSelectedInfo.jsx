@@ -48,22 +48,22 @@ const ItemsSelectedInfo = () => {
   };
 
   function formatElapsedTime(elapsedTime) {
-    const minutes = Math.floor(elapsedTime / 60).toString().padStart(2, "0");
+    const minutes = Math.floor(elapsedTime / 60)
+      .toString()
+      .padStart(2, "0");
     const seconds = (elapsedTime % 60).toFixed(0).toString().padStart(2, "0");
     return `${minutes}:${seconds}`;
   }
 
   const timerCalculation = () => {
-    let endTime  = new Date().getTime();
+    let endTime = new Date().getTime();
     const elapsedTimeNum = (endTime - startTimer) / 1000;
     const elapsedTimeFormatted = formatElapsedTime(elapsedTimeNum);
     return elapsedTimeFormatted;
-    
-  }
+  };
 
   //TODO להאביר ל Context
   const saveCollections = (collection) => {
-    
     collection = Object.keys(collection).map(
       (typeItems) => collection[typeItems]
     );
@@ -78,9 +78,12 @@ const ItemsSelectedInfo = () => {
     setFilterType("");
     setFilterItems([]);
     setshowAlert(true);
-    const totalTimer = timerCalculation()
+    const totalTimer = timerCalculation();
     const dataTime = setDataTime();
-    setStartTimeDate((oldDataTime) => [`the time: ${dataTime} time to Select: ${ totalTimer}`, ...oldDataTime]);
+    setStartTimeDate((oldDataTime) => [
+      `the time: ${dataTime} time to Select: ${totalTimer}`,
+      ...oldDataTime,
+    ]);
     const currentCollection =
       JSON.parse(localStorage.getItem("collection")) || [];
     const updatedCollection = currentCollection
@@ -90,8 +93,11 @@ const ItemsSelectedInfo = () => {
 
     const currentDataTime = JSON.parse(localStorage.getItem("dataTime")) || [];
     const updatedDataTime = currentDataTime
-      ? [dataTime, ...currentDataTime]
-      : [dataTime];
+      ? [
+          `the time: ${dataTime} time to Select: ${totalTimer}`,
+          ...currentDataTime,
+        ]
+      : [`the time: ${dataTime} time to Select: ${totalTimer}`];
     localStorage.setItem("dataTime", JSON.stringify(updatedDataTime));
 
     setShow(!show);
