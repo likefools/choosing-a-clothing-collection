@@ -1,13 +1,17 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "./Context";
-import { Button, Row, Col, Card } from "react-bootstrap";
+import { Button, Row, Col, Card} from "react-bootstrap";
+import { Dropdown, DropdownButton } from 'react-bootstrap';
 
 import pants from "./assets/pants.jpg";
 import shirt from "./assets/shirt.jpg";
 import shoes from "./assets/shoes.jpg";
 
 const ItemsList = () => {
+
+  const [filter, setFilter] = useState('aall');
   const allContextProps = useContext(DataContext);
+
   const {
     items,
     itemsSelected,
@@ -42,8 +46,24 @@ const ItemsList = () => {
     return imgUrl;
   };
 
+ 
+
+  const handleFilterChange = (filterType) => {
+    setFilter(filterType);
+    console.log('hi')
+  };
+
+
   return (
     <div className="itemsCard">
+{/*       
+      <DropdownButton id="dropdown-basic-button" title={filter}>
+        <Dropdown.Item onClick={() => handleFilterChange('all')}>All</Dropdown.Item>
+        <Dropdown.Item onClick={() => handleFilterChange('active')}>Active</Dropdown.Item>
+        <Dropdown.Item onClick={() => handleFilterChange('completed')}>Completed</Dropdown.Item>
+      </DropdownButton>
+      <p>Selected filter: {filter}</p> */}
+    
       <Row xs={2} md={3} lg={4} className="g-2">
         {filterItems?.map((item, index) => (
           <Col key={index}>
