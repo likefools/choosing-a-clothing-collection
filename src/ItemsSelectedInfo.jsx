@@ -80,10 +80,11 @@ const ItemsSelectedInfo = () => {
     setshowAlert(true);
     const totalTimer = timerCalculation();
     const dataTime = setDataTime();
-    setStartTimeDate((oldDataTime) => [
-      `Time Select: ${dataTime} Time to Select: ${totalTimer}`,
-      ...oldDataTime,
-    ]);
+    // setStartTimeDate((oldDataTime) => [
+    //   `Time Select: ${dataTime} Time to Select: ${totalTimer}`,
+    //   ...oldDataTime,
+    // ]);
+    setStartTimeDate((oldDataTime) => [[dataTime, totalTimer], ...oldDataTime]);
     const currentCollection =
       JSON.parse(localStorage.getItem("collection")) || [];
     const updatedCollection = currentCollection
@@ -93,11 +94,8 @@ const ItemsSelectedInfo = () => {
 
     const currentDataTime = JSON.parse(localStorage.getItem("dataTime")) || [];
     const updatedDataTime = currentDataTime
-      ? [
-          `the time: ${dataTime} time to Select: ${totalTimer}`,
-          ...currentDataTime,
-        ]
-      : [`the time: ${dataTime} time to Select: ${totalTimer}`];
+      ? [[dataTime, totalTimer], ...currentDataTime]
+      : [[dataTime, totalTimer]];
     localStorage.setItem("dataTime", JSON.stringify(updatedDataTime));
 
     setShow(!show);

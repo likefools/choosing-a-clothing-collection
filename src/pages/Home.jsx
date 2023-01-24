@@ -30,7 +30,7 @@ const Home = () => {
   }, [itemsSelected]);
 
   useEffect(() => {
-    setFilterItems(filterItems)
+    setFilterItems(filterItems);
   }, [filterItems]);
 
   const types = createTypesList();
@@ -40,15 +40,22 @@ const Home = () => {
     const nextItems = types.filter(
       (type) => !Object.keys(itemsSelected).includes(type)
     );
-    const firstNextItem = nextItems[0]
+    const firstNextItem = nextItems[0];
     itemsOfType = itemsOfType.filter((item) => item.type === firstNextItem);
-    if(Object.keys(itemsSelected).length == 1){
-      let itemSelected = itemsSelected[Object.keys(itemsSelected)[0]]
-      
-      console.log(firstNextItem);
-      const nextItemSizes = translateSize(itemSelected.type, firstNextItem.type, itemSelected.size);
-      itemsOfType = sortBytypeSelected('color', itemSelected.color, itemsOfType);
-      itemsOfType = sortBytypeSelected('size', nextItemSizes, itemsOfType);
+    if (Object.keys(itemsSelected).length == 1) {
+      let itemSelected = itemsSelected[Object.keys(itemsSelected)[0]];
+
+      const nextItemSizes = translateSize(
+        itemSelected.type,
+        firstNextItem.type,
+        itemSelected.size
+      );
+      itemsOfType = sortBytypeSelected(
+        "color",
+        itemSelected.color,
+        itemsOfType
+      );
+      itemsOfType = sortBytypeSelected("size", nextItemSizes, itemsOfType);
     }
     setFilterType(firstNextItem);
     setFilterItems(itemsOfType);
@@ -80,7 +87,9 @@ const Home = () => {
           pantsArrSize[key].includes(size)
         );
         shoesSize = shoesArrSize[shirtSize];
-        typeTo == "shirt" ? translatedSize = shirtSize : translatedSize = shoesSize;
+        typeTo == "shirt"
+          ? (translatedSize = shirtSize)
+          : (translatedSize = shoesSize);
         break;
       case "shirt":
         typeTo == "pants"
@@ -95,19 +104,18 @@ const Home = () => {
         typeTo == "shirt" ? shirtSize : pantsSize;
         break;
     }
-    console.log(translatedSize)
     return translatedSize;
   };
 
   function sortBytypeSelected(type, matchTypes, array) {
-  
     array.sort((a, b) => {
-      if (matchTypes.includes(a[type]) && !matchTypes.includes(b[type])) return -1;
-      else if (!matchTypes.includes(a[type]) && matchTypes.includes(b[type])) return 1;
+      if (matchTypes.includes(a[type]) && !matchTypes.includes(b[type]))
+        return -1;
+      else if (!matchTypes.includes(a[type]) && matchTypes.includes(b[type]))
+        return 1;
       else return 0;
     });
-    console.log(array)
-    return array
+    return array;
   }
 
   function filterItemsByType(filterType) {

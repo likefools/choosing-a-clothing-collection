@@ -29,7 +29,7 @@ const Collection = () => {
     setCollection(itemsCollection);
     setDatatime(startTimeDate);
   }, [itemsCollection]);
-
+  console.log(dataTime);
   const deletecollectionSeat = (collectionSeat, index) => {
     setItems((old) => [...old, ...collectionSeat]);
     const newCollection = itemsCollection;
@@ -101,12 +101,28 @@ const Collection = () => {
         </Row>
         <div className="infoTimeOrDelete">
           <Button
+            size="lg"
             variant="danger"
             onClick={() => deletecollectionSeat(items, index)}
           >
             Delete
           </Button>
-          <Alert variant="secondary">{dataTime ? dataTime[index] : ""}</Alert>
+          <Alert variant="secondary">
+            {dataTime ? (
+              <div key={index} className="dataTime">
+                <div className="fw-bold">
+                  Time Selected:{" "}
+                  <span className="text-success">{dataTime[index][0]}</span>
+                </div>
+                <div className="fw-bold">
+                  Time to Select:{" "}
+                  <span className="text-success">{dataTime[index][1]}</span>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+          </Alert>
         </div>
       </div>
     );
