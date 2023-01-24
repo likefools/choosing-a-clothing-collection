@@ -9,15 +9,12 @@ import shoes from "./assets/shoes.jpg";
 
 const ItemsList = () => {
   const [itemsFilter, setItemsFilter] = useState([]);
-  // const [filterPropertie, setfilterPropertie] = useState({});
   const allContextProps = useContext(DataContext);
 
   const {
-    items,
     itemsSelected,
     setItemsSelected,
     filterType,
-    setFilterItems,
     filterItems,
     setStartTimer,
   } = {
@@ -135,6 +132,7 @@ const ItemsList = () => {
               </Card.Header>
               <div
                 className="cardImg"
+                // מוסיף צבע למסגרת של התמונה
                 // style={{
                 //   backgroundColor: item.color !== "white" ? item.color : "#eee",
                 // }}

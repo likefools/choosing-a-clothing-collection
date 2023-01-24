@@ -19,7 +19,6 @@ const ItemsSelectedInfo = () => {
     setItems,
     setshowAlert,
     removeItemSelected,
-    itemsCollection,
     setItemsCollection,
     startTimer,
     setStartTimeDate,
@@ -62,7 +61,6 @@ const ItemsSelectedInfo = () => {
     return elapsedTimeFormatted;
   };
 
-  //TODO להאביר ל Context
   const saveCollections = (collection) => {
     collection = Object.keys(collection).map(
       (typeItems) => collection[typeItems]
@@ -80,10 +78,6 @@ const ItemsSelectedInfo = () => {
     setshowAlert(true);
     const totalTimer = timerCalculation();
     const dataTime = setDataTime();
-    // setStartTimeDate((oldDataTime) => [
-    //   `Time Select: ${dataTime} Time to Select: ${totalTimer}`,
-    //   ...oldDataTime,
-    // ]);
     setStartTimeDate((oldDataTime) => [[dataTime, totalTimer], ...oldDataTime]);
     const currentCollection =
       JSON.parse(localStorage.getItem("collection")) || [];

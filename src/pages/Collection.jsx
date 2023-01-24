@@ -1,9 +1,9 @@
 import React from "react";
-import { useRef, useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 
 import { DataContext } from "../Context";
 
-import { Button, Col, Card, Row, Badge, Alert } from "react-bootstrap";
+import { Button, Col, Card, Row, Alert } from "react-bootstrap";
 
 import pants from "../assets/pants.jpg";
 import shirt from "../assets/shirt.jpg";
@@ -20,7 +20,6 @@ const Collection = () => {
   } = {
     ...allContextProps,
   };
-  // const collection = itemsCollection;
 
   const [collection, setCollection] = useState();
   const [dataTime, setDatatime] = useState();
@@ -29,7 +28,7 @@ const Collection = () => {
     setCollection(itemsCollection);
     setDatatime(startTimeDate);
   }, [itemsCollection]);
-  console.log(dataTime);
+
   const deletecollectionSeat = (collectionSeat, index) => {
     setItems((old) => [...old, ...collectionSeat]);
     const newCollection = itemsCollection;

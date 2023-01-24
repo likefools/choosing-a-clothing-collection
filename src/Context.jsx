@@ -24,7 +24,6 @@ export function DataProvider({ children }) {
   const [showAlert, setshowAlert] = useState(false);
   const [startTimer, setStartTimer] = useState(new Date().getTime());
 
-
   const [startTimeDate, setStartTimeDate] = useState(
     storedDatatime ? [...storedDatatime] : []
   );
@@ -46,8 +45,6 @@ export function DataProvider({ children }) {
     fetchData();
   }, []);
 
-  
-
   function createTypesList() {
     const types = [];
     for (const item of items) {
@@ -57,7 +54,6 @@ export function DataProvider({ children }) {
     }
     return types;
   }
-  // const types = createTypesList();
 
   const removeItemSelected = (item) => {
     let itemsObj = { ...itemsSelected };
@@ -72,7 +68,6 @@ export function DataProvider({ children }) {
     setFilterType,
     filterItems,
     setFilterItems,
-    // nextFilterItems,
     createTypesList,
     itemsSelected,
     setItemsSelected,

@@ -2,10 +2,10 @@ import React, { useContext, useState, useEffect } from "react";
 
 import { DataContext } from "../Context";
 
-import { Button, Badge, Row, Col, Card } from "react-bootstrap";
+import { Button, Badge, Nav } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 import ItemsList from "../ItemsList";
 import AlertSaveCollections from "../AlertSaveCollections";
-import { Next } from "react-bootstrap/esm/PageItem";
 
 const Home = () => {
   const allContextProps = useContext(DataContext);
@@ -16,11 +16,10 @@ const Home = () => {
     filterItems,
     setFilterItems,
     itemsSelected,
-    setItemsSelected,
+    itemsCollection,
     createTypesList,
   } = { ...allContextProps };
 
-  // console.log(items);
   useEffect(() => {
     filterItemsByType(filterType);
   }, [filterType]);
@@ -148,8 +147,18 @@ const Home = () => {
   return (
     <div className="home">
       <AlertSaveCollections />
-
       <h2>Home</h2>
+      {itemsCollection.length > 0 ? (
+        <Nav className="justify-content-center">
+          <Nav.Item>
+            <LinkContainer to="/Collection">
+              <Nav.Link>Go To Collection</Nav.Link>
+            </LinkContainer>
+          </Nav.Item>
+        </Nav>
+      ) : (
+        ""
+      )}
       <div className="typesName">{typesButtons}</div>
       <ItemsList />
     </div>

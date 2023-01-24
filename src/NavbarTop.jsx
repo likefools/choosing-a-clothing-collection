@@ -1,8 +1,4 @@
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import Offcanvas from "react-bootstrap/Offcanvas";
-import Button from "react-bootstrap/Button";
+import { Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import ItemsSelectedInfo from "./ItemsSelectedInfo";
 
@@ -19,8 +15,9 @@ const NavbarTop = () => {
     >
       <Container fluid>
         <LinkContainer to="/">
-          <Navbar.Brand>Navbar Offcanvas</Navbar.Brand>
+          <Navbar.Brand>Select Collection</Navbar.Brand>
         </LinkContainer>
+
         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
         <Navbar.Offcanvas
           id={`offcanvasNavbar-expand-${expand}`}
@@ -29,7 +26,7 @@ const NavbarTop = () => {
         >
           <Offcanvas.Header closeButton>
             <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-              Offcanvas
+              Select Collection
             </Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
@@ -42,7 +39,7 @@ const NavbarTop = () => {
               </LinkContainer>
             </Nav>
             <Nav className="justify-content-end flex-grow-1 pe-3">
-              <ItemsSelectedInfo/>
+              <ItemsSelectedInfo />
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
