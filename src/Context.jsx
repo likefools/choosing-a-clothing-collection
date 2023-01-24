@@ -22,6 +22,9 @@ export function DataProvider({ children }) {
   const [filterType, setFilterType] = useState("");
   const [filterItems, setFilterItems] = useState([]);
   const [showAlert, setshowAlert] = useState(false);
+  const [startTimer, setStartTimer] = useState(new Date().getTime());
+
+
   const [startTimeDate, setStartTimeDate] = useState(
     storedDatatime ? [...storedDatatime] : []
   );
@@ -78,6 +81,8 @@ export function DataProvider({ children }) {
     removeItemSelected,
     itemsCollection,
     setItemsCollection,
+    startTimer,
+    setStartTimer,
     startTimeDate,
     setStartTimeDate,
   };

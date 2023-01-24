@@ -21,6 +21,7 @@ const ItemsSelectedInfo = () => {
     removeItemSelected,
     itemsCollection,
     setItemsCollection,
+    startTimer,
     setStartTimeDate,
   } = {
     ...allContextProps,
@@ -46,8 +47,23 @@ const ItemsSelectedInfo = () => {
     return (startTimeD = `${startTimeD.toLocaleDateString()} ${startTimeD.toLocaleTimeString()}`);
   };
 
+  function formatElapsedTime(elapsedTime) {
+    const minutes = Math.floor(elapsedTime / 60).toString().padStart(2, "0");
+    const seconds = (elapsedTime % 60).toFixed(0).toString().padStart(2, "0");
+    return `${minutes}:${seconds}`;
+  }
+
+  const timerCalculation = () => {
+    let endTime  = new Date().getTime();
+    const elapsedTimeNum = (endTime - startTimer) / 1000;
+    const elapsedTimeFormatted = formatElapsedTime(elapsedTimeNum);
+    return elapsedTimeFormatted;
+    
+  }
+
   //TODO להאביר ל Context
   const saveCollections = (collection) => {
+    
     collection = Object.keys(collection).map(
       (typeItems) => collection[typeItems]
     );
@@ -62,8 +78,9 @@ const ItemsSelectedInfo = () => {
     setFilterType("");
     setFilterItems([]);
     setshowAlert(true);
+    const totalTimer = timerCalculation()
     const dataTime = setDataTime();
-    setStartTimeDate((oldDataTime) => [dataTime, ...oldDataTime]);
+    setStartTimeDate((oldDataTime) => [`the time: ${dataTime} time to Select: ${ totalTimer}`, ...oldDataTime]);
     const currentCollection =
       JSON.parse(localStorage.getItem("collection")) || [];
     const updatedCollection = currentCollection

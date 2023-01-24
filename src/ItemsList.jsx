@@ -15,12 +15,14 @@ const ItemsList = () => {
     filterType,
     setFilterItems,
     filterItems,
+    setStartTimer,
   } = {
     ...allContextProps,
   };
 
   function addToSelectedItems(item) {
     setItemsSelected({ ...itemsSelected, [item.type]: item });
+    if(!itemsSelected) setStartTimer(new Date().getTime());
   }
 
   const itemsSelectedButtonDisabled = (item) =>

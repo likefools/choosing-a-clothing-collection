@@ -42,12 +42,12 @@ const Home = () => {
     );
     const firstNextItem = nextItems[0]
     itemsOfType = itemsOfType.filter((item) => item.type === firstNextItem);
-    if(Object.keys(itemsSelected).length > 0){
+    if(Object.keys(itemsSelected).length == 1){
       let itemSelected = itemsSelected[Object.keys(itemsSelected)[0]]
       
       console.log(firstNextItem);
       const nextItemSizes = translateSize(itemSelected.type, firstNextItem.type, itemSelected.size);
-
+      itemsOfType = sortBytypeSelected('color', itemSelected.color, itemsOfType);
       itemsOfType = sortBytypeSelected('size', nextItemSizes, itemsOfType);
     }
     setFilterType(firstNextItem);
