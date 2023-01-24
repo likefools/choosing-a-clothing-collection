@@ -22,7 +22,6 @@ const Home = () => {
   // console.log(items);
   useEffect(() => {
     filterItemsByType(filterType);
-    // nextItemsfilter();
   }, [filterType]);
 
   useEffect(() => {
@@ -39,25 +38,57 @@ const Home = () => {
     // const colorItemsSelected = Object.keys(itemsSelected);
     console.log(nextItem);
     itemsOfType = itemsOfType.filter((item) => item.type === nextItem);
-    // itemsOfType = filterBytypeSelected(itemsOfType)
+    // translateSize("pants", "shirt", 43);
+    // itemsOfType = filterBytypeSelected(itemsOfType);
     setFilterType(nextItem);
     setFilterItems(itemsOfType);
   };
 
-  // function setActiveType(typeName) {
-  //   setFilterType(typeName);
-  // }
+  const translateSize = (type, typeTo, size) => {
+    // shoes shirt pants
+    let pants = {
+      S: [30, 31, 32],
+      L: [34, 35, 36],
+      XL: [39, 42, 43],
+      XXL: [48],
+    };
+    let shoes = {
+      S: [36, 37],
+      L: [39],
+      XL: [43],
+      XXL: [45, 46],
+    };
+    let translatedSize;
+    let shirtSize;
+    let shoesSize;
+    let pantsSize;
+    switch (type) {
+      case "pants":
+        shirtSize = translatedSize = Object.keys(pants).filter((key) =>
+          pants[key].includes(size)
+        );
+        shoesSize = shoes[shirtSize];
+        typeTo == "shirt" ? shirtSize : shoesSize;
+        break;
+      case "shirt":
+        typeTo == "pants"
+          ? (translatedSize = pants[size])
+          : (translatedSize = shoes[size]);
+        break;
+      case "shoes":
+        shirtSize = translatedSize = Object.keys(shoes).filter((key) =>
+          shoes[key].includes(size)
+        );
+        pantsSize = pants[shirtSize];
+        typeTo == "shirt" ? shirtSize : pantsSize;
+        break;
+    }
+    return translatedSize;
+  };
 
   function filterBytypeSelected(itemsOfType) {
     const colorItemsSelected = Object.keys(itemsSelected)[0].color;
   }
-  // if (
-  //   Object.keys(itemsSelected).length > 0 &&
-  //   Object.keys(itemsSelected).length < 3
-  // ) {
-  //   console.log(itemsSelected);
-  //   nextItemsfilter();
-  // }
 
   function filterItemsByType(filterType) {
     let itemsOfType = [...items];
@@ -90,7 +121,7 @@ const Home = () => {
     <div className="home">
       <AlertSaveCollections />
 
-      <h2>home</h2>
+      <h2>Home</h2>
       <div className="typesName">{typesButtons}</div>
       <ItemsList />
     </div>

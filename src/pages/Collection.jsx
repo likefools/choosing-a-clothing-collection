@@ -68,7 +68,7 @@ const Collection = () => {
   const getCollection = collection?.map((items, index) => {
     return (
       <div key={index} className="itemsCard">
-        <h4>collection {index + 1}</h4>
+        <h4>Collection {index + 1}</h4>
         <Row xs={3} md={3} lg={4} className="g-2">
           {items.map((item) => {
             return (
@@ -115,7 +115,7 @@ const Collection = () => {
     <div className="collection">
       <h2>
         {Object.keys(collection).length > 0
-          ? "collection"
+          ? "Collection"
           : "no collection items"}
       </h2>
 
