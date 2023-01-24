@@ -81,7 +81,7 @@ const ItemsSelectedInfo = () => {
     const totalTimer = timerCalculation();
     const dataTime = setDataTime();
     setStartTimeDate((oldDataTime) => [
-      `the time: ${dataTime} time to Select: ${totalTimer}`,
+      `Time Select: ${dataTime} Time to Select: ${totalTimer}`,
       ...oldDataTime,
     ]);
     const currentCollection =

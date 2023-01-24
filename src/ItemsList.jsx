@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "./Context";
-import { Button, Row, Col, Card} from "react-bootstrap";
-import { Dropdown, DropdownButton } from 'react-bootstrap';
+import { Button, Row, Col, Card } from "react-bootstrap";
+import { Dropdown, DropdownButton } from "react-bootstrap";
 
 import pants from "./assets/pants.jpg";
 import shirt from "./assets/shirt.jpg";
 import shoes from "./assets/shoes.jpg";
 
 const ItemsList = () => {
-
-  const [filter, setFilter] = useState('aall');
+  const [itemsFilter, setItemsFilter] = useState([]);
+  // const [filterPropertie, setfilterPropertie] = useState({});
   const allContextProps = useContext(DataContext);
 
   const {
@@ -23,10 +23,13 @@ const ItemsList = () => {
   } = {
     ...allContextProps,
   };
+  useEffect(() => {
+    setItemsFilter(filterItems);
+  }, [filterItems]);
 
   function addToSelectedItems(item) {
     setItemsSelected({ ...itemsSelected, [item.type]: item });
-    if(!itemsSelected) setStartTimer(new Date().getTime());
+    if (!itemsSelected) setStartTimer(new Date().getTime());
   }
 
   const itemsSelectedButtonDisabled = (item) =>
@@ -46,26 +49,83 @@ const ItemsList = () => {
     return imgUrl;
   };
 
- 
+  const filterItemsPropertie = () => {
+    let All = ["all"];
+    let Sizes = [];
+    let Colors = [];
+    let Brands = [];
 
-  const handleFilterChange = (filterType) => {
-    setFilter(filterType);
-    console.log('hi')
+    for (const filterItem of filterItems) {
+      if (!Sizes.includes(filterItem.size)) {
+        Sizes.push(filterItem.size);
+      }
+      if (!Colors.includes(filterItem.color)) {
+        Colors.push(filterItem.color);
+      }
+      if (!Brands.includes(filterItem.brand)) {
+        Brands.push(filterItem.brand);
+      }
+    }
+    // console.log(arrsizes, arrColors, arrBrands);
+    return { All, Sizes, Colors, Brands };
   };
 
+  const handleFilterChange = (namePropertie, selectedPropertie) => {
+    let itemsOfFilter = [...filterItems];
+    const properties = {
+      All: "all",
+      Sizes: "size",
+      Colors: "color",
+      Brands: "brand",
+    };
+    if (namePropertie === "All") setItemsFilter(itemsOfFilter);
+    else
+      itemsOfFilter = itemsOfFilter.filter(
+        (item) => item[properties[namePropertie]] === selectedPropertie
+      );
+    setItemsFilter(itemsOfFilter);
+  };
+
+  const filterButtons = Object.keys(filterItemsPropertie()).map(
+    (itemPropertie, index) => {
+      return itemPropertie === "All" ? (
+        <Button
+          variant="success"
+          key={index}
+          onClick={() => handleFilterChange(itemPropertie)}
+        >
+          set All items
+        </Button>
+      ) : (
+        <div key={index} className="dropdownButton">
+          <DropdownButton
+            variant="secondary"
+            id="dropdown-basic-button"
+            title={itemPropertie}
+          >
+            {filterItemsPropertie()[itemPropertie].map((propertie, index) => (
+              <Dropdown.Item
+                key={index}
+                onClick={() => handleFilterChange(itemPropertie, propertie)}
+              >
+                {propertie}
+              </Dropdown.Item>
+            ))}
+          </DropdownButton>
+        </div>
+      );
+    }
+  );
 
   return (
     <div className="itemsCard">
-{/*       
-      <DropdownButton id="dropdown-basic-button" title={filter}>
-        <Dropdown.Item onClick={() => handleFilterChange('all')}>All</Dropdown.Item>
-        <Dropdown.Item onClick={() => handleFilterChange('active')}>Active</Dropdown.Item>
-        <Dropdown.Item onClick={() => handleFilterChange('completed')}>Completed</Dropdown.Item>
-      </DropdownButton>
-      <p>Selected filter: {filter}</p> */}
-    
+      {itemsFilter.length > 0 ? (
+        <div className="dropdownButtons">{filterButtons}</div>
+      ) : (
+        ""
+      )}
       <Row xs={2} md={3} lg={4} className="g-2">
-        {filterItems?.map((item, index) => (
+        {itemsFilter?.map((item, index) => (
           <Col key={index}>
             <Card
               style={itemsSelectedButtonDisabled(item) ? { opacity: 0.6 } : {}}

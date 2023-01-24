@@ -34,7 +34,12 @@
 
 .itemsCard{
   margin: 1rem 0;
-
+  .dropdownButtons{
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+  }
   .cardImg{
     padding: 0.8rem;
     background-color: #eee;
