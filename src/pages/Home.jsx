@@ -8,7 +8,6 @@ import ItemsList from "../ItemsList";
 import AlertSaveCollections from "../AlertSaveCollections";
 
 const Home = () => {
-  const [allItems, setAllItems] = useState();
   const allContextProps = useContext(DataContext);
   const {
     items,
@@ -27,7 +26,7 @@ const Home = () => {
 
   useEffect(() => {
     sortItems();
-    renderingNextItems();
+    renderingNextTypeItems();
   }, [itemsSelected]);
 
   useEffect(() => {
@@ -84,19 +83,20 @@ const Home = () => {
         return 1;
       else return 0;
     });
-    // setAllItems(items);
   };
 
-  const renderingNextItems = () => {
-    const nextItems = types.filter(
-      (type) => !Object.keys(itemsSelected).includes(type)
-    );
-    let filterItemsByType = [...items];
-    filterItemsByType = filterItemsByType.filter(
-      (item) => item.type === nextItems[0]
-    );
-    setFilterType(nextItems[0]);
-    setFilterItems(filterItemsByType);
+  const renderingNextTypeItems = () => {
+    if (Object.keys(itemsSelected).length > 0) {
+      const nextItems = types.filter(
+        (type) => !Object.keys(itemsSelected).includes(type)
+      );
+      let filterItemsByType = [...items];
+      filterItemsByType = filterItemsByType.filter(
+        (item) => item.type === nextItems[0]
+      );
+      setFilterType(nextItems[0]);
+      setFilterItems(filterItemsByType);
+    }
   };
 
   function filterItemsByType(filterType) {
