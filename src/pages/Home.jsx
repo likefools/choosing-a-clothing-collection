@@ -8,6 +8,7 @@ import ItemsList from "../ItemsList";
 import AlertSaveCollections from "../AlertSaveCollections";
 
 const Home = () => {
+  const [allItems, setAllItems] = useState();
   const allContextProps = useContext(DataContext);
   const {
     items,
@@ -21,11 +22,17 @@ const Home = () => {
   } = { ...allContextProps };
 
   useEffect(() => {
+    setAllItems(items);
+  }, [allItems]);
+
+  useEffect(() => {
     filterItemsByType(filterType);
   }, [filterType]);
 
   useEffect(() => {
-    nextItemsfilter();
+    // nextItemsfilter();
+    sortItems();
+    renderingNextItems();
   }, [itemsSelected]);
 
   useEffect(() => {
@@ -35,12 +42,14 @@ const Home = () => {
   const types = createTypesList();
 
   const nextItemsfilter = () => {
-    let itemsOfType = [...items];
+    let filterItemsByType = [...items];
     const nextItems = types.filter(
       (type) => !Object.keys(itemsSelected).includes(type)
     );
     const firstNextItem = nextItems[0];
-    itemsOfType = itemsOfType.filter((item) => item.type === firstNextItem);
+    filterItemsByType = filterItemsByType.filter(
+      (item) => item.type === firstNextItem
+    );
     if (Object.keys(itemsSelected).length == 1) {
       let itemSelected = itemsSelected[Object.keys(itemsSelected)[0]];
 
@@ -49,15 +58,80 @@ const Home = () => {
         firstNextItem.type,
         itemSelected.size
       );
-      itemsOfType = sortBytypeSelected(
+      filterItemsByType = sortBytypeSelected(
         "color",
         itemSelected.color,
-        itemsOfType
+        filterItemsByType
       );
-      itemsOfType = sortBytypeSelected("size", nextItemSizes, itemsOfType);
+      filterItemsByType = sortBytypeSelected(
+        "size",
+        nextItemSizes,
+        filterItemsByType
+      );
     }
     setFilterType(firstNextItem);
-    setFilterItems(itemsOfType);
+    setFilterItems(filterItemsByType);
+  };
+
+  const sortItems = () => {
+    if (Object.keys(itemsSelected).length == 1) {
+      let itemSelected = itemsSelected[Object.keys(itemsSelected)];
+      const allSizesItme = translateToSize(
+        itemSelected.type,
+        itemSelected.size
+      );
+      sortAllSize(allSizesItme);
+    }
+    // rendering the items after the sort
+  };
+
+  const translateToSize = (typeItem, sizeItem) => {
+    // shoes shirt pants
+    const arrayOfSizes = [
+      { shoes: [36, 37], shirt: ["S"], pants: [30, 31, 32] },
+      { shoes: [39], shirt: ["L"], pants: [34, 35, 36] },
+      { shoes: [43], shirt: ["XL"], pants: [39, 42, 43] },
+      { shoes: [45, 46], shirt: ["XXL"], pants: [48] },
+    ];
+    let allSizesItme;
+    arrayOfSizes.forEach((arrayOfSize) => {
+      if (arrayOfSize[typeItem].includes(sizeItem)) {
+        allSizesItme = arrayOfSize;
+      }
+    });
+
+    return allSizesItme;
+  };
+
+  const sortAllSize = (allSizes) => {
+    items.sort((a, b) => {
+      if (
+        allSizes[a.type].includes(a.size) &&
+        !allSizes[b.type].includes(b.size)
+      )
+        return -1;
+      else if (
+        !allSizes[a.type].includes(a.size) &&
+        allSizes[b.type].includes(b.size)
+      )
+        return 1;
+      else return 0;
+    });
+    setAllItems(items);
+  };
+
+  const renderingNextItems = () => {
+    if (Object.keys(itemsSelected).length > 0) {
+      const nextItems = types.filter(
+        (type) => !Object.keys(itemsSelected).includes(type)
+      );
+      let filterItemsByType = [...items];
+      filterItemsByType = filterItemsByType.filter(
+        (item) => item.type === nextItems[0]
+      );
+      setFilterType(nextItems[0]);
+      setFilterItems(filterItemsByType);
+    }
   };
 
   const translateSize = (typeSelected, typeTo, size) => {
