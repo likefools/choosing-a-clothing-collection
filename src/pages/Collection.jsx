@@ -68,7 +68,7 @@ const Collection = () => {
     return (
       <div key={index} className="itemsCard">
         <h4>Collection {index + 1}</h4>
-        <Row xs={3} md={3} lg={4} className="g-2">
+        <Row xs={3} md={3} lg={3} className="g-2">
           {items.map((item) => {
             return (
               <Col key={item.id}>

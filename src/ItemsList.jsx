@@ -91,7 +91,7 @@ const ItemsList = () => {
           key={index}
           onClick={() => handleFilterChange(itemPropertie)}
         >
-          set All items
+          set All
         </Button>
       ) : (
         <div key={index} className="dropdownButton">
@@ -121,14 +121,14 @@ const ItemsList = () => {
       ) : (
         ""
       )}
-      <Row xs={2} md={3} lg={4} className="g-2">
+      <Row xs={2} md={3} lg={5} className="g-2">
         {itemsFilter?.map((item, index) => (
           <Col key={index}>
             <Card
               style={itemsSelectedButtonDisabled(item) ? { opacity: 0.6 } : {}}
             >
               <Card.Header className="text-center">
-                <h3>{item.brand}</h3>
+                <h5>{item.brand}</h5>
               </Card.Header>
               <div
                 className="cardImg"
