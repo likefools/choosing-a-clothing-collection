@@ -26,7 +26,7 @@ const ItemsList = () => {
 
   function addToSelectedItems(item) {
     setItemsSelected({ ...itemsSelected, [item.type]: item });
-    if (!itemsSelected) setStartTimer(new Date().getTime());
+    if (Object.keys(itemsSelected).length === 0) setStartTimer(new Date().getTime());
   }
 
   const itemsSelectedButtonDisabled = (item) =>
