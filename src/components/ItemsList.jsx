@@ -53,7 +53,7 @@ const ItemsList = () => {
     let Colors = [];
     let Brands = [];
 
-    for (const filterItem of filterItems) {
+    for (const filterItem of itemsFilter) {
       if (!Sizes.includes(filterItem.size)) {
         Sizes.push(filterItem.size);
       }
@@ -69,19 +69,21 @@ const ItemsList = () => {
   };
 
   const handleFilterChange = (namePropertie, selectedPropertie) => {
-    let itemsOfFilter = [...filterItems];
+    let itemsOfFilter = [...itemsFilter];
     const properties = {
-      All: "all",
+      All: "All",
       Sizes: "size",
       Colors: "color",
       Brands: "brand",
     };
-    if (namePropertie === "All") setItemsFilter(itemsOfFilter);
-    else
+
+    if (namePropertie === "All") setItemsFilter(filterItems);
+    else {
       itemsOfFilter = itemsOfFilter.filter(
         (item) => item[properties[namePropertie]] === selectedPropertie
       );
-    setItemsFilter(itemsOfFilter);
+      setItemsFilter(itemsOfFilter);
+    }
   };
 
   const filterButtons = Object.keys(filterItemsPropertie()).map(
