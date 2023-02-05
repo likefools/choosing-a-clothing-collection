@@ -1,50 +1,44 @@
-<div align="right">
-  
 # choosing-a-clothing-collection
 
-## תיאור הפרויקט
-הפרויקט מאפשר למשתמש למיין סטים של בגדים. בהתאם להחלטות של המשתמש האלגוריתם ממליץ על פריטי לבוש, על פי המידה והצבע שהמשתמש בחר בהתחלה
-  
-## הוראות הרצה
+## Project Description
 
-**אחרי שמורידים את התיקיה יש להריץ בטרמינל:**
+This project allows the user to sort sets of clothes according to their decision. The algorithm recommends different clothing items according to the size and color the user chose.
 
+## Instructions on How to Run
 
-  
+**After downloading the folder you need to run in the terminal:**
+
 `npn install`
 
 `npm run dev`
 
-
- 
-**כדי לרוץ במצב פיתוח:**
+**To run in dev mode:**
 
 Open [http://127.0.0.1:5173/](http://127.0.0.1:5173/) to view it in your browser.
 
- 
-**לחלופין, אם רוצים להריץ כ-production:**
-
+**Alternatively, to run in production mode:**
 
 `npm run build`
 
 `npm run preview`
- 
 
 .
 
-## אלגוריתם בחירת המידות
-המידות הותאמו בצורה הבאה:
-- מידת מכנסיים 30,31,32 הותאמו למידת חולצה S ולמידת נעליים 36,37.
-- מידת מכנסיים 34,35,36 הותאמו למידת חולצה L ולמידת נעליים 39.
-- מידת מכנסיים 39,42,43 הותאמו למידת חולצה XL ולמידת נעליים 43.
-- מידת מכנסיים 48 הותאמו למידת חולצה XXL ולמידת נעליים 45,46.
+## Cloth Choosing Algorithm
 
-## התפריט
-### בתפריט שני מסכים: Home ו-Collection:
-###### מסך Home הוא מסך פרטי לבוש.
-- מכיל שלושה כפתורים של בחירת סוג פריט (shoes, shirt, pants)ועליהם את מספר הפריטים שבמלאי מכל פריט.
-- לחיצה על כל אחד מהכפתורים פותח תצוגה מפורטת של פריטים לבחירה, הכוללת תמונה, מידה וצבע כמו גם כפתור להוספה של הפריט לבחירה.
-###### מסך Collection הוא מסך סטים שמורים.
-- הוא מכיל שלישיות שמורות של מכנס, חולצה, נעליים. בכל אחד מהם מוצגת המידה והצבע. כפתור Delete מוחק סט שמור.
+The sizes were paired in the following way:
 
-</div>
+- Shoes 36,37 with pants 30,31,32 with shirt S.
+- Shoes 39 with pants 34,35,36 with shirt L.
+- Shoes 43 with pants 39,42,43 with shirt XL.
+- Shoes 45,46 with pants 48 with shirt XXL.
+
+## Menu
+
+###### Home
+
+- The screen for clothing items. Contains three buttons of item choice and on them have the number of items in stock of every item type.
+
+###### Collection
+
+- Contains saved triples of pants, shirt, shoes. Each has a Delete button to delete that specific set.
