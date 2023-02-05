@@ -24,10 +24,11 @@ const ItemsList = () => {
     setItemsFilter(filterItems);
   }, [filterItems]);
 
-  function addToSelectedItems(item) {
+  const addToSelectedItems = (item) => {
     setItemsSelected({ ...itemsSelected, [item.type]: item });
-    if (Object.keys(itemsSelected).length === 0) setStartTimer(new Date().getTime());
-  }
+    if (Object.keys(itemsSelected).length === 0)
+      setStartTimer(new Date().getTime());
+  };
 
   const itemsSelectedButtonDisabled = (item) =>
     itemsSelected[item.type] ? itemsSelected[item.type].id === item.id : false;

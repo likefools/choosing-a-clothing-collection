@@ -46,13 +46,13 @@ const ItemsSelectedInfo = () => {
     return (startTimeD = `${startTimeD.toLocaleDateString()} ${startTimeD.toLocaleTimeString()}`);
   };
 
-  function formatElapsedTime(elapsedTime) {
+  const formatElapsedTime = (elapsedTime) => {
     const minutes = Math.floor(elapsedTime / 60)
       .toString()
       .padStart(2, "0");
     const seconds = (elapsedTime % 60).toFixed(0).toString().padStart(2, "0");
     return `${minutes}:${seconds}`;
-  }
+  };
 
   const timerCalculation = () => {
     let endTime = new Date().getTime();

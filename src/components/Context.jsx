@@ -4,15 +4,15 @@ const storedCollection = JSON.parse(localStorage.getItem("collection"));
 const storedDatatime = JSON.parse(localStorage.getItem("dataTime"));
 export const DataContext = createContext();
 
-async function getData() {
+const getData = async () => {
   const actualData = await fetch(
     `https://run.mocky.io/v3/2d06d2c1-5a77-4ecd-843a-53247bcb0b94`
   ).then((response) => response.json());
 
   return actualData;
-}
+};
 
-export function DataProvider({ children }) {
+export const DataProvider = ({ children }) => {
   const [items, setItems] = useState([]);
   const [itemsSelected, setItemsSelected] = useState({});
   const [itemsCollection, setItemsCollection] = useState(
@@ -45,7 +45,7 @@ export function DataProvider({ children }) {
     fetchData();
   }, []);
 
-  function createTypesList() {
+  const createTypesList = () => {
     const types = [];
     for (const item of items) {
       if (!types.includes(item.type)) {
@@ -53,7 +53,7 @@ export function DataProvider({ children }) {
       }
     }
     return types;
-  }
+  };
 
   const removeItemSelected = (item) => {
     let itemsObj = { ...itemsSelected };
@@ -87,4 +87,4 @@ export function DataProvider({ children }) {
       {children}
     </DataContext.Provider>
   );
-}
+};

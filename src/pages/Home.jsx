@@ -99,13 +99,13 @@ const Home = () => {
     }
   };
 
-  function filterItemsByType(filterType) {
+  const filterItemsByType = (filterType) => {
     let itemsOfType = [...items];
     if (filterType) {
       itemsOfType = itemsOfType.filter((item) => item.type === filterType);
       setFilterItems(itemsOfType);
     }
-  }
+  };
 
   const typesButtons = types.map((type, index) => {
     return (
