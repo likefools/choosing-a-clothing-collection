@@ -31,7 +31,11 @@
   }
   
 }
-
+.collection{
+  h2{
+    text-align: center;
+  }
+}
 .itemsCard{
   margin: 1rem 0;
   .dropdownButtons{
@@ -77,4 +81,41 @@
       margin: 0;
     }
   }
+}
+
+@media screen and (max-width: 600px) {
+
+  .typesName button{
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+  .itemsCard{
+    h5 {
+      font-size: 0.8rem;
+    }
+    .properties .color{
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+    .properties button{
+      font-size: 0.7rem;
+    } 
+  } 
+  
+
+  .dropdownButtons button{
+    font-size: 0.7rem;
+  }
+  
+  .infoTimeOrDelete button{
+    font-size: 0.8rem;
+  }
+  .infoTimeOrDelete .alert {
+    padding: 0.5rem;
+  }
+
+  .fw-bold{
+    font-size: 0.7rem;
+  }
+
 }

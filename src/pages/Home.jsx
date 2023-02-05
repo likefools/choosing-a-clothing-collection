@@ -1,11 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
 
-import { DataContext } from "../Context";
+import { DataContext } from "../components/Context";
 
 import { Button, Badge, Nav } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import ItemsList from "../ItemsList";
-import AlertSaveCollections from "../AlertSaveCollections";
+import ItemsList from "../components/ItemsList";
+import AlertSaveCollections from "../components/AlertSaveCollections";
 
 const Home = () => {
   const allContextProps = useContext(DataContext);

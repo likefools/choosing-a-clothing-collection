@@ -1,8 +1,8 @@
 import React from "react";
-import { DataProvider } from "./Context";
+import { DataProvider } from "./components/Context";
 
 // react-router
-import NavbarTop from "./NavbarTop";
+import NavbarTop from "./components/NavbarTop";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // react-bootstrap

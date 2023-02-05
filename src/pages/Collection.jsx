@@ -1,7 +1,7 @@
 import React from "react";
 import { useContext, useState, useEffect } from "react";
 
-import { DataContext } from "../Context";
+import { DataContext } from "../components/Context";
 
 import { Button, Col, Card, Row, Alert } from "react-bootstrap";
 
@@ -74,7 +74,7 @@ const Collection = () => {
               <Col key={item.id}>
                 <Card>
                   <Card.Header className="text-center">
-                    <h4>{item.type}</h4>
+                    <h5>{item.type}</h5>
                   </Card.Header>
                   <div className="cardImg">
                     <Card.Img variant="top" src={imgType(item.type)} />
@@ -131,7 +131,7 @@ const Collection = () => {
     <div className="collection">
       <h2>
         {Object.keys(collection).length > 0
-          ? "Collection"
+          ? "Collections"
           : "no collection items"}
       </h2>
 

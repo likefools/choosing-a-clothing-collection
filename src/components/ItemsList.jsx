@@ -3,9 +3,9 @@ import { DataContext } from "./Context";
 import { Button, Row, Col, Card } from "react-bootstrap";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 
-import pants from "./assets/pants.jpg";
-import shirt from "./assets/shirt.jpg";
-import shoes from "./assets/shoes.jpg";
+import pants from "../assets/pants.jpg";
+import shirt from "../assets/shirt.jpg";
+import shoes from "../assets/shoes.jpg";
 
 const ItemsList = () => {
   const [itemsFilter, setItemsFilter] = useState([]);
