@@ -1,15 +1,17 @@
 import React, { createContext, useState, useEffect } from "react";
-
+import data from "../../data.json";
 const storedCollection = JSON.parse(localStorage.getItem("collection"));
 const storedDatatime = JSON.parse(localStorage.getItem("dataTime"));
 export const DataContext = createContext();
 
 const getData = async () => {
-  const actualData = await fetch(
-    `https://run.mocky.io/v3/2d06d2c1-5a77-4ecd-843a-53247bcb0b94`
-  ).then((response) => response.json());
+  // const actualData = await fetch(
+  //   `https://run.mocky.io/v3/2d06d2c1-5a77-4ecd-843a-53247bcb0b94`
+  // ).then((response) => response.json());
 
-  return actualData;
+  // return actualData;
+
+  return data
 };
 
 export const DataProvider = ({ children }) => {
